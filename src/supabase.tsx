@@ -48,7 +48,7 @@ export const useSupabaseSession = (): Session | null | undefined => {
         authListener.unsubscribe()
       }
     }
-  }, [])
+  }, [supabase.auth])
 
   return session
 }

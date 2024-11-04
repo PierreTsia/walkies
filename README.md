@@ -20,7 +20,7 @@ Work in progress. What's done and what's left:
 
 1. Create a project on supabase.io
 1. In the dashboard, create an `items` table and add two columns: `title` (text) and `is_complete` (bool).
-1. Add API key and URL to the [.env](.env) file
+1. Add API key and URL to the [.env](.env.local) file
 1. Start the development web server with `npm run dev` or `yarn dev`
 
 ## Notes
