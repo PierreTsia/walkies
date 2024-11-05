@@ -1,7 +1,11 @@
 import NextLogo from './NextLogo'
 import SupabaseLogo from './SupabaseLogo'
+import {useTranslations} from 'next-intl';
 
 export default function Header() {
+
+  const t = useTranslations('HomePage');
+
   return (
     <div className="flex flex-col items-center gap-16">
       <div className="flex items-center justify-center gap-8">
@@ -26,7 +30,7 @@ export default function Header() {
           className="font-bold hover:underline"
           rel="noreferrer"
         >
-          Supabase
+          {t('title')}
         </a>{' '}
         and{' '}
         <a

@@ -5,7 +5,9 @@ import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ReactQueryProvider from '@/providers/ReactQueryProvider'
-
+import {NextIntlClientProvider} from 'next-intl';
+import {getLocale, getMessages} from 'next-intl/server';
+import { UserProvider } from '@/providers/UserProvider'
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -16,35 +18,47 @@ export const metadata = {
   description: 'The fastest way to build apps with Next.js and Supabase',
 }
 
-export default function RootLayout({
+
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+
+  const locale = await getLocale();
+
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
   return (
     <html
       lang="en"
       className={GeistSans.className}
       style={{ colorScheme: 'dark' }}
     >
-      <body className="bg-background text-foreground">
+    <NextIntlClientProvider messages={messages}>
+      <UserProvider>
+
+    <body className="bg-background text-foreground">
         <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+
           enableSystem
           disableTransitionOnChange
         >
           <ReactQueryProvider>
             <main className="flex min-h-screen flex-col items-center">
               {children}
-              <Analytics />{' '}
-              {/* ^^ remove this if you are not deploying to vercel. See more at https://vercel.com/docs/analytics  */}
+              <Analytics />
             </main>
             <ReactQueryDevtools initialIsOpen={false} />
           </ReactQueryProvider>
         </ThemeProvider>
       </body>
+      </UserProvider>
+    </NextIntlClientProvider>
     </html>
   )
 }
