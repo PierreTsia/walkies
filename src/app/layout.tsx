@@ -5,8 +5,8 @@ import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ReactQueryProvider from '@/providers/ReactQueryProvider'
-import {NextIntlClientProvider} from 'next-intl';
-import {getLocale, getMessages} from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 import { UserProvider } from '@/providers/UserProvider'
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -18,47 +18,42 @@ export const metadata = {
   description: 'The fastest way to build apps with Next.js and Supabase',
 }
 
-
-
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-
-  const locale = await getLocale();
+  const locale = await getLocale()
 
   // Providing all messages to the client
   // side is the easiest way to get started
-  const messages = await getMessages();
+  const messages = await getMessages()
   return (
     <html
       lang="en"
       className={GeistSans.className}
       style={{ colorScheme: 'dark' }}
     >
-    <NextIntlClientProvider messages={messages}>
-      <UserProvider>
-
-    <body className="bg-background text-foreground">
-        <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
-        <ThemeProvider
-          attribute="class"
-
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ReactQueryProvider>
-            <main className="flex min-h-screen flex-col items-center">
-              {children}
-              <Analytics />
-            </main>
-            <ReactQueryDevtools initialIsOpen={false} />
-          </ReactQueryProvider>
-        </ThemeProvider>
-      </body>
-      </UserProvider>
-    </NextIntlClientProvider>
+      <NextIntlClientProvider messages={messages}>
+        <UserProvider>
+          <body className="bg-background text-foreground">
+            <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
+            <ThemeProvider
+              attribute="class"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ReactQueryProvider>
+                <main className="flex min-h-screen flex-col items-center">
+                  {children}
+                  <Analytics />
+                </main>
+                <ReactQueryDevtools initialIsOpen={false} />
+              </ReactQueryProvider>
+            </ThemeProvider>
+          </body>
+        </UserProvider>
+      </NextIntlClientProvider>
     </html>
   )
 }

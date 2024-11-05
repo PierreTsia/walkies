@@ -1,10 +1,9 @@
 import NextLogo from './NextLogo'
 import SupabaseLogo from './SupabaseLogo'
-import {useTranslations} from 'next-intl';
+import { useTranslations } from 'next-intl'
 
 export default function Header() {
-
-  const t = useTranslations('HomePage');
+  const t = useTranslations('HomePage')
 
   return (
     <div className="flex flex-col items-center gap-16">
