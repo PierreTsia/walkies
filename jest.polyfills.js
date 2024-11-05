@@ -9,6 +9,7 @@
  */
 
 const { TextDecoder, TextEncoder, ReadableStream } = require('node:util')
+const { TransformStream } = require('web-streams-polyfill')
 
 Object.defineProperties(globalThis, {
   TextDecoder: { value: TextDecoder },
@@ -27,4 +28,19 @@ Object.defineProperties(globalThis, {
   FormData: { value: FormData },
   Request: { value: Request },
   Response: { value: Response },
+  TransformStream: { value: TransformStream },
+  BroadcastChannel: {
+    value: class {
+      constructor(name) {
+        this.name = name
+        this.onmessage = null
+      }
+      postMessage(message) {
+        if (this.onmessage) {
+          this.onmessage({ data: message })
+        }
+      }
+      close() {}
+    },
+  },
 })

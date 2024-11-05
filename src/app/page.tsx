@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import { cookies } from 'next/headers'
 import { createServerClient } from '@/utils/supabase'
 import ThemeToggle from '@/components/ThemeToggle'
+import LocaleSwitcher from '@/components/LocaleSwitcher'
 
 export default async function Index() {
   const cookieStore = cookies()
@@ -38,19 +39,11 @@ export default async function Index() {
         </main>
       </div>
 
-      <footer className="w-full justify-center border-t border-t-foreground/10 p-8 text-center text-xs">
-        <p className="mb-6">
-          Powered by{' '}
-          <a
-            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-            target="_blank"
-            className="font-bold hover:underline"
-            rel="noreferrer"
-          >
-            Supabase
-          </a>
-        </p>
-        <ThemeToggle />
+      <footer className="w-full border-t border-t-foreground/10 p-8 text-center text-xs">
+        <div className="flex w-full justify-end gap-2">
+          <ThemeToggle />
+          <LocaleSwitcher />
+        </div>
       </footer>
     </div>
   )
