@@ -2,11 +2,23 @@
 
 import { useState, useTransition } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { Input } from '@/components/ui/input'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import { submitRegistrationRequest } from '@/app/actions/submitRegistrationRequest'
 
 type FormValues = {
   name: string
   email: string
+  content_text?: string
 }
 
 export default function RegistrationRequestForm() {
@@ -18,6 +30,7 @@ export default function RegistrationRequestForm() {
   } = useForm<FormValues>()
   const [status, setStatus] = useState<null | 'success' | 'error'>(null)
   const [isPending, startTransition] = useTransition()
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const onSubmit: SubmitHandler<FormValues> = (formData) => {
     startTransition(async () => {
@@ -27,64 +40,80 @@ export default function RegistrationRequestForm() {
           setStatus('success')
           reset() // Clear form fields
         }
-      } catch (error) {
+      } catch (error: any) {
         setStatus('error')
-        console.error('Error submitting registration request:', error)
+        setErrorMessage(error.message)
       }
     })
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full max-w-md flex-col gap-4 rounded-md  p-4 shadow-md"
-    >
-      <h3 className="text-2xl font-semibold">Join the Network</h3>
+    <Card className="w-full max-w-md">
+      <CardHeader>
+        <CardTitle className="text-2xl font-semibold">
+          Join the Network
+        </CardTitle>
+      </CardHeader>
 
-      <label className="flex flex-col gap-1">
-        Name
-        <input
-          type="text"
-          {...register('name', { required: 'Name is required' })}
-          className="rounded border p-2"
-          placeholder="Your name"
-        />
-        {errors.name && <p className="text-red-600">{errors.name.message}</p>}
-      </label>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Your name"
+              {...register('name', { required: 'Name is required' })}
+            />
+            {errors.name && (
+              <p className="text-sm text-red-600">{errors.name.message}</p>
+            )}
+          </div>
 
-      <label className="flex flex-col gap-1">
-        Email
-        <input
-          type="email"
-          {...register('email', {
-            required: 'Email is required',
-            pattern: {
-              value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-              message: 'Invalid email format',
-            },
-          })}
-          className="rounded border p-2"
-          placeholder="Your email"
-        />
-        {errors.email && <p className="text-red-600">{errors.email.message}</p>}
-      </label>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Your email"
+              {...register('email', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                  message: 'Invalid email format',
+                },
+              })}
+            />
+            {errors.email && (
+              <p className="text-sm text-red-600">{errors.email.message}</p>
+            )}
+          </div>
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="mt-4 rounded bg-blue-500 p-2 text-white hover:bg-blue-600 disabled:bg-gray-300"
-      >
-        {isPending ? 'Submitting...' : 'Submit Registration Request'}
-      </button>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="content_text">Additional Information</Label>
+            <Textarea
+              id="content_text"
+              placeholder="Tell us more about yourself"
+              {...register('content_text')}
+              rows={4} // Adjust the number of rows as needed
+            />
+          </div>
+        </CardContent>
 
-      {status === 'success' && (
-        <p className="text-green-600">Request submitted successfully!</p>
-      )}
-      {status === 'error' && (
-        <p className="text-red-600">
-          Failed to submit request. Please try again.
-        </p>
-      )}
-    </form>
+        <CardFooter className="flex flex-col gap-4">
+          <Button type="submit" disabled={isPending}>
+            {isPending ? 'Submitting...' : 'Submit Registration Request'}
+          </Button>
+          {status === 'success' && (
+            <p className="text-center text-sm text-green-600">
+              Request submitted successfully!
+            </p>
+          )}
+          {status === 'error' && (
+            <p className="text-center text-sm text-red-600">{errorMessage}</p>
+          )}
+        </CardFooter>
+      </form>
+    </Card>
   )
 }
