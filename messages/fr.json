@@ -1,5 +1,6 @@
 {
-  "HomePage": {
-    "title": "Bonjour monde!"
+  "Header": {
+    "title": "Bienvenue sur Walkies!",
+    "description": "Un réseau social privé pour les chiens et leurs propriétaires"
   }
 }
