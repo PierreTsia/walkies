@@ -8,6 +8,7 @@ import ReactQueryProvider from '@/providers/ReactQueryProvider'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { UserProvider } from '@/providers/UserProvider'
+import { Toaster } from '@/components/ui/toaster'
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -51,6 +52,7 @@ export default async function RootLayout({
                 <ReactQueryDevtools initialIsOpen={false} />
               </ReactQueryProvider>
             </ThemeProvider>
+            <Toaster />
           </body>
         </UserProvider>
       </NextIntlClientProvider>

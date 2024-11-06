@@ -2,5 +2,39 @@
   "Header": {
     "title": "Welcome on walkies !",
     "description": "A private social network for dogs and their owners"
+  },
+  "Registration": {
+    "title": "Join the Network",
+    "description": "Send a request to join the network. It will be reviewed by the administrator.",
+    "email": "Email",
+    "email_placeholder": "Your email",
+    "email_error": "Email is required",
+    "email_pattern_error": "Email is invalid",
+    "name": "Name",
+    "name_placeholder": "Your name",
+    "name_error": "Name is required",
+    "content_text": "Why do you want to join the network?",
+    "content_text_placeholder": "Your message",
+    "submit": "Submit registration request",
+    "submitting": "Submitting...",
+    "submit_success": "Your registration request has been sent. You will receive an email when it is reviewed."
+  },
+  "Onboarding": {
+    "Steps": {
+      "waiting_for_approval": "Waiting for approval",
+      "waiting_for_approval_description": "Your is being reviewed by the administrator.",
+      "user_registration": "User registration",
+      "user_registration_description": "Complete your profile to join the network.",
+      "dog_registration": "Dog registration",
+      "dog_registration_description": "Tell us everything about your dog.",
+      "pending_status_title": "Your request is currently on status <status>pending</status> since {requestedAt} :",
+      "approved_at": "Congratulation, Your request has been <status>approved</status> on {reviewedAt}.",
+      "name": "Name: ",
+      "email": "Email: ",
+      "content": "Content: ",
+      "will_be_reviewed": "You will receive an email when your request is reviewed.",
+      "user_registration_step_description": "You can now complete your profile to join the network. Click on the button below to start the registration process.",
+      "sign_up": "Sign up"
+    }
   }
 }
