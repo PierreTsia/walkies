@@ -47,7 +47,9 @@
     --muted-foreground: 240 5% 64.9%;
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+
+    /* Adjusted dark mode destructive color for better contrast */
+    --destructive: 0 76% 55%; /* Close to Tailwind's red-500 */
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;

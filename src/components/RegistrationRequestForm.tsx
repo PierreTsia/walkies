@@ -67,11 +67,12 @@ export default function RegistrationRequestForm() {
             <Input
               id="name"
               type="text"
+              className={errors.name ? 'border-destructive' : ''}
               placeholder={t('name_placeholder')}
               {...register('name', { required: t('name_error') })}
             />
             {errors.name && (
-              <p className="text-sm text-red-600">{errors.name.message}</p>
+              <p className="text-sm text-destructive">{errors.name.message}</p>
             )}
           </div>
 
@@ -80,6 +81,7 @@ export default function RegistrationRequestForm() {
             <Input
               id="email"
               type="email"
+              className={errors.email ? 'border-destructive' : ''}
               placeholder={t('email_placeholder')}
               {...register('email', {
                 required: t('email_error'),
@@ -90,7 +92,7 @@ export default function RegistrationRequestForm() {
               })}
             />
             {errors.email && (
-              <p className="text-sm text-red-600">{errors.email.message}</p>
+              <p className="text-sm text-destructive">{errors.email.message}</p>
             )}
           </div>
 
@@ -115,7 +117,7 @@ export default function RegistrationRequestForm() {
             </p>
           )}
           {status === 'error' && (
-            <p className="text-center text-sm text-red-600">
+            <p className="text-center text-sm text-destructive">
               {submitErrorMessage}
             </p>
           )}
