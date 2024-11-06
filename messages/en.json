@@ -2,5 +2,21 @@
   "Header": {
     "title": "Welcome on walkies !",
     "description": "A private social network for dogs and their owners"
+  },
+  "Registration": {
+    "title": "Join the Network",
+    "description": "Send a request to join the network. It will be reviewed by the administrator.",
+    "email": "Email",
+    "email_placeholder": "Your email",
+    "email_error": "Email is required",
+    "email_pattern_error": "Email is invalid",
+    "name": "Name",
+    "name_placeholder": "Your name",
+    "name_error": "Name is required",
+    "content_text": "Why do you want to join the network?",
+    "content_text_placeholder": "Your message",
+    "submit": "Submit registration request",
+    "submitting": "Submitting...",
+    "submit_success": "Your registration request has been sent. You will receive an email when it is reviewed."
   }
 }

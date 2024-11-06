@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { submitRegistrationRequest } from '@/app/actions/submitRegistrationRequest'
+import { useTranslations } from 'next-intl'
 
 type FormValues = {
   name: string
@@ -30,7 +31,10 @@ export default function RegistrationRequestForm() {
   } = useForm<FormValues>()
   const [status, setStatus] = useState<null | 'success' | 'error'>(null)
   const [isPending, startTransition] = useTransition()
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [submitErrorMessage, setSubmitErrorMessage] = useState<string | null>(
+    null,
+  )
+  const t = useTranslations('Registration')
 
   const onSubmit: SubmitHandler<FormValues> = (formData) => {
     startTransition(async () => {
@@ -42,7 +46,7 @@ export default function RegistrationRequestForm() {
         }
       } catch (error: any) {
         setStatus('error')
-        setErrorMessage(error.message)
+        setSubmitErrorMessage(error.message)
       }
     })
   }
@@ -50,20 +54,21 @@ export default function RegistrationRequestForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle className="text-2xl font-semibold">
-          Join the Network
+        <CardTitle className="text-2xl font-semibold ">{t('title')}</CardTitle>
+        <CardTitle className="text-sm font-thin text-card-foreground/50">
+          {t('description')}
         </CardTitle>
       </CardHeader>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">{t('name')}</Label>
             <Input
               id="name"
               type="text"
-              placeholder="Your name"
-              {...register('name', { required: 'Name is required' })}
+              placeholder={t('name_placeholder')}
+              {...register('name', { required: t('name_error') })}
             />
             {errors.name && (
               <p className="text-sm text-red-600">{errors.name.message}</p>
@@ -71,16 +76,16 @@ export default function RegistrationRequestForm() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('email')}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="Your email"
+              placeholder={t('email_placeholder')}
               {...register('email', {
-                required: 'Email is required',
+                required: t('email_error'),
                 pattern: {
                   value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                  message: 'Invalid email format',
+                  message: t('email_pattern_error'),
                 },
               })}
             />
@@ -90,10 +95,10 @@ export default function RegistrationRequestForm() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="content_text">Additional Information</Label>
+            <Label htmlFor="content_text">{t('content_text')}</Label>
             <Textarea
               id="content_text"
-              placeholder="Tell us more about yourself"
+              placeholder={t('content_text_placeholder')}
               {...register('content_text')}
               rows={4} // Adjust the number of rows as needed
             />
@@ -101,16 +106,18 @@ export default function RegistrationRequestForm() {
         </CardContent>
 
         <CardFooter className="flex flex-col gap-4">
-          <Button type="submit" disabled={isPending}>
-            {isPending ? 'Submitting...' : 'Submit Registration Request'}
+          <Button type="submit" disabled={isPending} variant="default">
+            {isPending ? t('submitting') : t('submit')}
           </Button>
           {status === 'success' && (
             <p className="text-center text-sm text-green-600">
-              Request submitted successfully!
+              {t('submit_success')}
             </p>
           )}
           {status === 'error' && (
-            <p className="text-center text-sm text-red-600">{errorMessage}</p>
+            <p className="text-center text-sm text-red-600">
+              {submitErrorMessage}
+            </p>
           )}
         </CardFooter>
       </form>

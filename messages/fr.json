@@ -2,5 +2,21 @@
   "Header": {
     "title": "Bienvenue sur Walkies!",
     "description": "Un réseau social privé pour les chiens et leurs propriétaires"
+  },
+  "Registration": {
+    "title": "Rejoindre le réseau",
+    "description": "Envoyez une demande pour rejoindre le réseau. Elle sera examinée par l'administrateur.",
+    "email": "E-mail",
+    "email_placeholder": "Votre e-mail",
+    "email_error": "L'e-mail est requis",
+    "email_pattern_error": "L'e-mail est invalide",
+    "name": "Nom",
+    "name_placeholder": "Votre nom",
+    "name_error": "Le nom est requis",
+    "content_text": "Pourquoi souhaitez-vous rejoindre le réseau ?",
+    "content_text_placeholder": "Votre message",
+    "submit": "Envoyer la demande d'inscription",
+    "submitting": "Envoi en cours...",
+    "submit_success": "Votre demande d'inscription a été envoyée. Vous recevrez un e-mail lorsqu'elle sera examinée."
   }
 }
