@@ -4,25 +4,31 @@ import { createServerClient } from '@/utils/supabase'
 import ThemeToggle from '@/components/ThemeToggle'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import OnboardingContent from '@/components/OnboardingContent'
+import LogoutButton from '@/components/LogoutButton'
 import ReactQueryExample from '@/components/ReactQueryExample'
 
 export default async function Index() {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
-  const existingRequestEmail =
-    cookieStore.get('registration_request')?.value ?? ''
+  const logout = async () => {
+    'use server'
 
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createServerClient(cookieStore)
-      return true
-    } catch (e) {
-      return false
+    const cookieStore = cookies()
+    const supabase = createServerClient(cookieStore)
+
+    await supabase.auth.signOut()
+
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
     }
   }
+
+  const existingRequestEmail =
+    cookieStore.get('registration_request')?.value ?? ''
 
   const {
     data: { user },
@@ -52,6 +58,7 @@ export default async function Index() {
         <div className="flex w-full justify-end gap-2">
           <ThemeToggle />
           <LocaleSwitcher />
+          {user && <LogoutButton logout={logout} />}
         </div>
       </footer>
     </div>
