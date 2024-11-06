@@ -1,18 +1,35 @@
 import Link from 'next/link'
-import { headers, cookies } from 'next/headers'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createServerClient } from '@/utils/supabase'
+import { Button } from '@/components/ui/button'
+import { ChevronLeft, Terminal } from 'lucide-react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+
+import LoginForm from '@/components/LoginForm'
+import { useTranslations } from 'next-intl'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+
+interface LoginFormValues {
+  email: string
+  password: string
+}
 
 export default function Login({
   searchParams,
 }: {
   searchParams: { message: string }
 }) {
-  const signIn = async (formData: FormData) => {
+  const signIn = async (data: LoginFormValues) => {
     'use server'
 
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
+    const { email, password } = data
     const cookieStore = cookies()
     const supabase = createServerClient(cookieStore)
 
@@ -28,12 +45,13 @@ export default function Login({
     return redirect('/')
   }
 
-  const signUp = async (formData: FormData) => {
+  const t = useTranslations('Login')
+
+  /*  const signUp = async (data: LoginFormValues) => {
     'use server'
 
     const origin = headers().get('origin')
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
+    const { email, password } = data
     const cookieStore = cookies()
     const supabase = createServerClient(cookieStore)
 
@@ -50,69 +68,35 @@ export default function Login({
     }
 
     return redirect('/login?message=Check email to continue sign in process')
-  }
+  }*/
 
   return (
-    <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
-      <Link
-        href="/"
-        className="bg-btn-background hover:bg-btn-background-hover group absolute left-8 top-8 flex items-center rounded-md px-4 py-2 text-sm text-foreground no-underline"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>{' '}
-        Back
+    <div className="mt-4 flex w-full flex-1 flex-col justify-start gap-2 px-8">
+      <Link href="/">
+        <Button size="sm" variant="ghost">
+          <ChevronLeft size={16} />
+          {t('back_button')}
+        </Button>
       </Link>
-
-      <form
-        className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground animate-in"
-        action={signIn}
-      >
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-        <button className="mb-2 rounded-md bg-green-700 px-4 py-2 text-foreground">
-          Sign In
-        </button>
-        <button
-          formAction={signUp}
-          className="mb-2 rounded-md border border-foreground/20 px-4 py-2 text-foreground"
-        >
-          Sign Up
-        </button>
+      <div className="mx-auto my-auto w-full max-w-[400px]">
         {searchParams?.message && (
-          <p className="mt-4 bg-foreground/10 p-4 text-center text-foreground">
-            {searchParams.message}
-          </p>
+          <Alert variant="destructive" className="animate-in">
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Oops!</AlertTitle>
+            <AlertDescription>{searchParams.message}</AlertDescription>
+          </Alert>
         )}
-      </form>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('title')}</CardTitle>
+            <CardDescription>{t('description')} 🐾</CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            <LoginForm signIn={signIn} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
