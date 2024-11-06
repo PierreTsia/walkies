@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label'
 import { submitRegistrationRequest } from '@/app/actions/submitRegistrationRequest'
 import { useTranslations } from 'next-intl'
 import { Separator } from '@/components/ui/separator'
-import { KeyRound } from 'lucide-react'
+import { PawPrint } from 'lucide-react'
 import Link from 'next/link'
 
 type FormValues = {
@@ -127,11 +127,11 @@ export default function RegistrationRequestForm() {
           )}
           <Separator />
 
-          <p className="text-sm font-thin">Already have an account ?</p>
+          <p className="text-sm font-thin">{t('to_login_description')}</p>
           <Link href={'/login'}>
             <Button variant="secondary" className="gap-x-1">
-              <KeyRound size={16} />
-              Navigate to login page
+              <PawPrint size={16} />
+              {t('to_login')}
             </Button>
           </Link>
         </CardFooter>

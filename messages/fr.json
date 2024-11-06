@@ -17,7 +17,9 @@
     "content_text_placeholder": "Votre message",
     "submit": "Envoyer la demande d'inscription",
     "submitting": "Envoi en cours...",
-    "submit_success": "Votre demande d'inscription a été envoyée. Vous recevrez un e-mail lorsqu'elle sera examinée."
+    "submit_success": "Votre demande d'inscription a été envoyée. Vous recevrez un e-mail lorsqu'elle sera examinée.",
+    "to_login": "Se connecter",
+    "to_login_description": "Vous avez déjà un compte ? "
   },
   "Onboarding": {
     "Steps": {
@@ -29,7 +31,6 @@
       "dog_registration_description": "Dites-nous tout sur votre chien.",
       "pending_status_title": "Votre demande est actuellement en statut <status>en cours</status> depuis le {requestedAt} :",
       "approved_at": "Félicitations, votre demande a été <status>approuvée</status> le {reviewedAt}.",
-
       "name": "Nom: ",
       "email": "Email: ",
       "content": "Contenu: ",
@@ -37,5 +38,14 @@
       "user_registration_step_description": "Vous pouvez maintenant compléter votre profil pour rejoindre le réseau. Cliquez sur le bouton ci-dessous pour commencer le processus d'inscription.",
       "sign_up": "S'inscrire"
     }
+  },
+  "Login": {
+    "title": "Connectez vous !",
+    "description": "Et retrouvez tous vos amis à quatre pattes",
+    "back_button": "Retour",
+    "email_field": "Email :",
+    "password_field": "Mot de passe :",
+    "submit_button": "Se connecter",
+    "reset_button": "Annuler"
   }
 }

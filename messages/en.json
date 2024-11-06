@@ -17,7 +17,9 @@
     "content_text_placeholder": "Your message",
     "submit": "Submit registration request",
     "submitting": "Submitting...",
-    "submit_success": "Your registration request has been sent. You will receive an email when it is reviewed."
+    "submit_success": "Your registration request has been sent. You will receive an email when it is reviewed.",
+    "to_login": "To login page",
+    "to_login_description": "Already have an account? "
   },
   "Onboarding": {
     "Steps": {
@@ -36,5 +38,14 @@
       "user_registration_step_description": "You can now complete your profile to join the network. Click on the button below to start the registration process.",
       "sign_up": "Sign up"
     }
+  },
+  "Login": {
+    "title": "Login !",
+    "description": "And find all your four-legged friends",
+    "back_button": "Back",
+    "email_field": "Email :",
+    "password_field": "Password :",
+    "submit_button": "Login",
+    "reset_button": "Cancel"
   }
 }
