@@ -22,6 +22,8 @@ export default async function Index() {
     .eq('email', existingRequestEmail)
     .single()
 
+  console.log(existingRequest)
+
   return (
     <div className="flex w-full flex-1 flex-col items-center pt-2 ">
       <div className="flex  flex-1 flex-col  px-3">

@@ -4,6 +4,9 @@ import { DateTime } from 'luxon'
 import { useUserContext } from '@/providers/UserProvider'
 import { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
+import useDateFormats from '@/hooks/useDateFormats'
+import { Button } from '@/components/ui/button'
+import { useStepper } from '@/components/ui/stepper'
 
 const WithFeedBack = ({
   children,
@@ -23,7 +26,8 @@ const WithFeedBack = ({
 const WaitingForApproval = ({ request }: { request: RegistrationRequest }) => {
   const { locale } = useUserContext()
   const t = useTranslations('Onboarding.Steps')
-
+  const { longDateTimeFormat } = useDateFormats()
+  const { nextStep } = useStepper()
   switch (request.status) {
     case 'refused':
       return (
@@ -35,28 +39,33 @@ const WaitingForApproval = ({ request }: { request: RegistrationRequest }) => {
         </WithFeedBack>
       )
     case 'approved':
+      const reviewedAt = request?.reviewed_at
+        ? longDateTimeFormat(request.reviewed_at)
+        : null
       return (
         <WithFeedBack status={request.status}>
-          {/*TODO */}
-
-          <p className="-w-full">Your request for registration was approved</p>
+          <p className="mt-4 w-full ">
+            {t.rich('approved_at', {
+              status: (chunks) => (
+                <strong className="font-bold text-green-500">{chunks}</strong>
+              ),
+              reviewedAt,
+            })}
+          </p>{' '}
+          <p className="mt-6 w-full ">
+            {t('user_registration_step_description')}
+          </p>
+          <div className="mt-4 flex w-full items-center justify-center">
+            <Button size="lg" onClick={nextStep}>
+              {t('sign_up')}
+            </Button>
+          </div>
         </WithFeedBack>
       )
     case 'pending':
-      const requestedAt = DateTime.fromISO(
-        request.requested_at!,
-      ).toLocaleString(
-        {
-          month: 'long',
-          day: '2-digit',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        },
-        {
-          locale: locale === 'en' ? 'en-US' : 'fr-FR',
-        },
-      )
+      const requestedAt = request?.requested_at
+        ? longDateTimeFormat(request.requested_at)
+        : null
 
       return (
         <WithFeedBack status={request.status}>

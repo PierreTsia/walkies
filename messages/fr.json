@@ -28,10 +28,14 @@
       "dog_registration": "Inscription du chien",
       "dog_registration_description": "Dites-nous tout sur votre chien.",
       "pending_status_title": "Votre demande est actuellement en statut <status>en cours</status> depuis le {requestedAt} :",
+      "approved_at": "Félicitations, votre demande a été <status>approuvée</status> le {reviewedAt}.",
+
       "name": "Nom: ",
       "email": "Email: ",
       "content": "Contenu: ",
-      "will_be_reviewed": "Vous recevrez un e-mail lorsque votre demande sera examinée."
+      "will_be_reviewed": "Vous recevrez un e-mail lorsque votre demande sera examinée.",
+      "user_registration_step_description": "Vous pouvez maintenant compléter votre profil pour rejoindre le réseau. Cliquez sur le bouton ci-dessous pour commencer le processus d'inscription.",
+      "sign_up": "S'inscrire"
     }
   }
 }
