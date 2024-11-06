@@ -9,6 +9,7 @@ import {
   CardTitle,
   CardContent,
   CardFooter,
+  CardDescription,
 } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -55,9 +56,9 @@ export default function RegistrationRequestForm() {
     <Card className="w-full max-w-md">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold ">{t('title')}</CardTitle>
-        <CardTitle className="text-sm font-thin text-card-foreground/50">
+        <CardDescription className="text-sm font-thin text-card-foreground/50">
           {t('description')}
-        </CardTitle>
+        </CardDescription>
       </CardHeader>
 
       <form onSubmit={handleSubmit(onSubmit)}>

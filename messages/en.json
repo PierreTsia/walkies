@@ -18,5 +18,15 @@
     "submit": "Submit registration request",
     "submitting": "Submitting...",
     "submit_success": "Your registration request has been sent. You will receive an email when it is reviewed."
+  },
+  "Onboarding": {
+    "Steps": {
+      "waiting_for_approval": "Waiting for approval",
+      "waiting_for_approval_description": "Your registration needs to be approved by the administrator.",
+      "user_registration": "User registration",
+      "user_registration_description": "Complete your profile to join the network.",
+      "dog_registration": "Dog registration",
+      "dog_registration_description": "Tell us everything about your dog."
+    }
   }
 }

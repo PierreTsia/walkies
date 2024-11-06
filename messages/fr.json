@@ -18,5 +18,15 @@
     "submit": "Envoyer la demande d'inscription",
     "submitting": "Envoi en cours...",
     "submit_success": "Votre demande d'inscription a été envoyée. Vous recevrez un e-mail lorsqu'elle sera examinée."
+  },
+  "Onboarding": {
+    "Steps": {
+      "waiting_for_approval": "En attente de validation",
+      "waiting_for_approval_description": "Votre inscription doit être approuvée par l'administrateur.",
+      "user_registration": "Inscription de l'utilisateur",
+      "user_registration_description": "Complétez votre profil pour rejoindre le réseau.",
+      "dog_registration": "Inscription du chien",
+      "dog_registration_description": "Dites-nous tout sur votre chien."
+    }
   }
 }

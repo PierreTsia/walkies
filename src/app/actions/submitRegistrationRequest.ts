@@ -17,10 +17,6 @@ export async function submitRegistrationRequest(data: {
     .eq('email', data.email)
     .single()
 
-  if (fetchError) {
-    throw new Error(fetchError.message)
-  }
-
   if (existingRequest) {
     cookieStore.set('registration_request', data.email, {})
     return { success: false, message: 'Request already exists' }

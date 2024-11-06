@@ -5,7 +5,7 @@ export default function Header() {
   const t = useTranslations('Header')
 
   return (
-    <div className="flex flex-col items-center gap-y-2 ">
+    <div className="mb-10 flex flex-col items-center ">
       <RelaxingWalk className="h-60 w-80" />
       <div className="flex items-center justify-center gap-8"></div>
       <h1 className="sr-only">{t('title')}</h1>
@@ -15,7 +15,6 @@ export default function Header() {
         </h1>
         <p className="font-thin">{t('description')}</p>
       </span>
-      <div className="my-8 w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent p-[1px]" />
     </div>
   )
 }

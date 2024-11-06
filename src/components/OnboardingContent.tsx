@@ -2,9 +2,9 @@
 
 import RegistrationRequestForm from '@/components/RegistrationRequestForm'
 import { User } from '@supabase/supabase-js'
-import { RegistrationRequest } from '@/lib/supabase-types'
+import { RegistrationRequest } from '@/types'
 import LoggedInUserContent from '@/components/LoggedInUserContent'
-import WaitForRequestApproval from '@/components/WaitForRequestApproval'
+import OnboardingStepper from '@/components/OnboardingStepper'
 
 const OnboardingContent = ({
   request,
@@ -17,7 +17,7 @@ const OnboardingContent = ({
     return <LoggedInUserContent user={user} />
   }
   return request ? (
-    <WaitForRequestApproval request={request} />
+    <OnboardingStepper request={request} />
   ) : (
     <RegistrationRequestForm />
   )

@@ -18,7 +18,7 @@ export type Database = {
           requested_at: string | null
           reviewed_at: string | null
           reviewed_by: string | null
-          status: string | null
+          status: Database['public']['Enums']['request_status']
         }
         Insert: {
           content_text?: string | null
@@ -28,7 +28,7 @@ export type Database = {
           requested_at?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
-          status?: string | null
+          status?: Database['public']['Enums']['request_status']
         }
         Update: {
           content_text?: string | null
@@ -38,7 +38,7 @@ export type Database = {
           requested_at?: string | null
           reviewed_at?: string | null
           reviewed_by?: string | null
-          status?: string | null
+          status?: Database['public']['Enums']['request_status']
         }
         Relationships: [
           {
@@ -82,7 +82,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      request_status: 'pending' | 'approved' | 'refused'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -186,5 +186,3 @@ export type CompositeTypes<
   : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
     ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never
-
-export type RegistrationRequest = Tables<'registration_requests'>
