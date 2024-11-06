@@ -15,7 +15,7 @@ export default function Header() {
         </h1>
         <p className="font-thin">{t('description')}</p>
       </span>
-      <div className="my-8 w-full bg-gradient-to-r from-transparent via-foreground/20 to-transparent p-[1px]" />
+      <div className="my-8 w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent p-[1px]" />
     </div>
   )
 }
