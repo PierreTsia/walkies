@@ -11,6 +11,21 @@ export async function submitRegistrationRequest(data: {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
+  const { data: existingRequest, error: fetchError } = await supabase
+    .from('registration_requests')
+    .select('id')
+    .eq('email', data.email)
+    .single()
+
+  if (fetchError) {
+    throw new Error(fetchError.message)
+  }
+
+  if (existingRequest) {
+    cookieStore.set('registration_request', data.email, {})
+    return { success: false, message: 'Request already exists' }
+  }
+
   const { error } = await supabase.from('registration_requests').insert([
     {
       name: data.name,
@@ -23,6 +38,6 @@ export async function submitRegistrationRequest(data: {
   if (error) {
     throw new Error(error.message)
   }
-
+  cookieStore.set('registration_request', data.email, {})
   return { success: true }
 }
