@@ -26,7 +26,12 @@
       "user_registration": "User registration",
       "user_registration_description": "Complete your profile to join the network.",
       "dog_registration": "Dog registration",
-      "dog_registration_description": "Tell us everything about your dog."
+      "dog_registration_description": "Tell us everything about your dog.",
+      "pending_status_title": "Your request is currently on status <status>pending</status> since {requestedAt} :",
+      "name": "Name: ",
+      "email": "Email: ",
+      "content": "Content: ",
+      "will_be_reviewed": "You will receive an email when your request is reviewed."
     }
   }
 }

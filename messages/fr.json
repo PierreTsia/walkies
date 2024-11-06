@@ -26,7 +26,12 @@
       "user_registration": "Inscription de l'utilisateur",
       "user_registration_description": "Complétez votre profil pour rejoindre le réseau.",
       "dog_registration": "Inscription du chien",
-      "dog_registration_description": "Dites-nous tout sur votre chien."
+      "dog_registration_description": "Dites-nous tout sur votre chien.",
+      "pending_status_title": "Votre demande est actuellement en statut <status>en cours</status> depuis le {requestedAt} :",
+      "name": "Nom: ",
+      "email": "Email: ",
+      "content": "Contenu: ",
+      "will_be_reviewed": "Vous recevrez un e-mail lorsque votre demande sera examinée."
     }
   }
 }
