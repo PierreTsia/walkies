@@ -1,5 +1,41 @@
 {
-  "HomePage": {
-    "title": "Bonjour monde!"
+  "Header": {
+    "title": "Bienvenue sur Walkies!",
+    "description": "Un réseau social privé pour les chiens et leurs propriétaires"
+  },
+  "Registration": {
+    "title": "Rejoindre le réseau",
+    "description": "Envoyez une demande pour rejoindre le réseau. Elle sera examinée par l'administrateur.",
+    "email": "E-mail",
+    "email_placeholder": "Votre e-mail",
+    "email_error": "L'e-mail est requis",
+    "email_pattern_error": "L'e-mail est invalide",
+    "name": "Nom",
+    "name_placeholder": "Votre nom",
+    "name_error": "Le nom est requis",
+    "content_text": "Pourquoi souhaitez-vous rejoindre le réseau ?",
+    "content_text_placeholder": "Votre message",
+    "submit": "Envoyer la demande d'inscription",
+    "submitting": "Envoi en cours...",
+    "submit_success": "Votre demande d'inscription a été envoyée. Vous recevrez un e-mail lorsqu'elle sera examinée."
+  },
+  "Onboarding": {
+    "Steps": {
+      "waiting_for_approval": "En attente de validation",
+      "waiting_for_approval_description": "Votre inscription doit être approuvée par l'administrateur.",
+      "user_registration": "Inscription de l'utilisateur",
+      "user_registration_description": "Complétez votre profil pour rejoindre le réseau.",
+      "dog_registration": "Inscription du chien",
+      "dog_registration_description": "Dites-nous tout sur votre chien.",
+      "pending_status_title": "Votre demande est actuellement en statut <status>en cours</status> depuis le {requestedAt} :",
+      "approved_at": "Félicitations, votre demande a été <status>approuvée</status> le {reviewedAt}.",
+
+      "name": "Nom: ",
+      "email": "Email: ",
+      "content": "Contenu: ",
+      "will_be_reviewed": "Vous recevrez un e-mail lorsque votre demande sera examinée.",
+      "user_registration_step_description": "Vous pouvez maintenant compléter votre profil pour rejoindre le réseau. Cliquez sur le bouton ci-dessous pour commencer le processus d'inscription.",
+      "sign_up": "S'inscrire"
+    }
   }
 }

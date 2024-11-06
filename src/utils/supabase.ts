@@ -6,14 +6,16 @@ import {
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
+import { Database as SupabaseSchemaType } from '@/lib/supabase-types'
+
 export const createBrowserClient = () =>
-  browserClient(
+  browserClient<SupabaseSchemaType>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   )
 
 export const createServerClient = (cookieStore: ReturnType<typeof cookies>) =>
-  serverClient(
+  serverClient<SupabaseSchemaType>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -47,7 +49,7 @@ export const createMiddlewareClient = (request: NextRequest) => {
   // Create an unmodified response
   let response = NextResponse.next({ request: { headers: request.headers } })
 
-  const supabase = serverClient(
+  const supabase = serverClient<SupabaseSchemaType>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
