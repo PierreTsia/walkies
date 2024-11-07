@@ -48,6 +48,22 @@
     "submit_button": "Login",
     "reset_button": "Cancel"
   },
+  "SignUp": {
+    "card_title": "Sign up",
+    "card_description": "Create your account",
+    "email_field": "Email: ",
+    "password_field": "Password: ",
+    "confirm_password_field": "Password confirmation: ",
+    "submit_button": "Sign up",
+    "reset_button": "Cancel",
+    "sign_up_error": "Oops! An error occurred while signing up.",
+    "errors": {
+      "invalid_email": "Invalid email",
+      "password_min_length": "Password must be at least 6 characters long",
+      "password_confirm_min_length": "Password must be at least 6 characters long",
+      "passwords_mismatch": "Passwords do not match"
+    }
+  },
   "Admin": {
     "registration-requests": {
       "data-table": {

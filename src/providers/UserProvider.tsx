@@ -2,9 +2,10 @@
 
 import { createContext, useContext } from 'react'
 import { User } from '@supabase/supabase-js'
+import { UserType } from '@/types'
 
 interface UserContextType {
-  user: User | null
+  user: UserType | null
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
@@ -21,7 +22,7 @@ export default function UserProvider({
   user,
   children,
 }: {
-  user: User | null
+  user: UserType | null
   children: React.ReactNode
 }) {
   return (

@@ -56,7 +56,7 @@ export default async function RootLayout({
         <LocaleProvider>
           <UserProviderWrapper>
             <body className="bg-background text-foreground">
-              <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
+              <NextTopLoader showSpinner={false} height={2} color="#3f51b5" />
               <ThemeProvider
                 attribute="class"
                 enableSystem
@@ -65,13 +65,13 @@ export default async function RootLayout({
                 <ReactQueryProvider>
                   <main className="flex min-h-[calc(100vh-90px)] flex-col items-center">
                     {children}
+                    <Toaster />
                     <Analytics />
                   </main>
                   <Footer logout={logout} />
-                  <ReactQueryDevtools initialIsOpen={false} />
+                  {/*   <ReactQueryDevtools initialIsOpen={false} />*/}
                 </ReactQueryProvider>
               </ThemeProvider>
-              <Toaster />
             </body>
           </UserProviderWrapper>
         </LocaleProvider>
