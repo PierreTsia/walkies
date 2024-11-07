@@ -1,7 +1,7 @@
 import { RegistrationRequest, RegistrationRequestStatus } from '@/types'
 import RequestStatusFeedback from '@/components/RequestStatusFeedback'
 import { DateTime } from 'luxon'
-import { useUserContext } from '@/providers/UserProvider'
+import { useLocaleContext } from '@/providers/LocaleProvider'
 import { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import useDateFormats from '@/hooks/useDateFormats'
@@ -24,7 +24,7 @@ const WithFeedBack = ({
 }
 
 const WaitingForApproval = ({ request }: { request: RegistrationRequest }) => {
-  const { locale } = useUserContext()
+  const { locale } = useLocaleContext()
   const t = useTranslations('Onboarding.Steps')
   const { longDateTimeFormat } = useDateFormats()
   const { nextStep } = useStepper()

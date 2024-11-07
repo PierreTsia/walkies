@@ -7,8 +7,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ReactQueryProvider from '@/providers/ReactQueryProvider'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
-import { UserProvider } from '@/providers/UserProvider'
+import { LocaleProvider } from '@/providers/LocaleProvider'
 import { Toaster } from '@/components/ui/toaster'
+import Footer from '@/components/Footer'
+import { cookies } from 'next/headers'
+import { createServerClient } from '@/utils/supabase'
+import UserProviderWrapper from '@/providers/UserProviderWrapper'
+
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -26,35 +31,49 @@ export default async function RootLayout({
 }) {
   const locale = await getLocale()
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages()
+
+  const logout = async () => {
+    'use server'
+
+    const cookieStore = cookies()
+    const supabase = createServerClient(cookieStore)
+
+    await supabase.auth.signOut()
+
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
   return (
-    <html
-      lang={locale ?? 'en'}
-      className={GeistSans.className}
-      style={{ colorScheme: 'dark' }}
-    >
+    <html lang={locale ?? 'en'} className={GeistSans.className}>
       <NextIntlClientProvider messages={messages}>
-        <UserProvider>
-          <body className="bg-background text-foreground">
-            <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
-            <ThemeProvider
-              attribute="class"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <ReactQueryProvider>
-                <main className="flex min-h-screen flex-col items-center">
-                  {children}
-                  <Analytics />
-                </main>
-                <ReactQueryDevtools initialIsOpen={false} />
-              </ReactQueryProvider>
-            </ThemeProvider>
-            <Toaster />
-          </body>
-        </UserProvider>
+        <LocaleProvider>
+          <UserProviderWrapper>
+            <body className="bg-background text-foreground">
+              <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
+              <ThemeProvider
+                attribute="class"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <ReactQueryProvider>
+                  <main className="flex min-h-[calc(100vh-90px)] flex-col items-center">
+                    {children}
+                    <Analytics />
+                  </main>
+                  <Footer logout={logout} />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </ReactQueryProvider>
+              </ThemeProvider>
+              <Toaster />
+            </body>
+          </UserProviderWrapper>
+        </LocaleProvider>
       </NextIntlClientProvider>
     </html>
   )

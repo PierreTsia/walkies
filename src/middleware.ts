@@ -2,24 +2,52 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { createMiddlewareClient } from '@/utils/supabase'
 
 export async function middleware(request: NextRequest) {
-  try {
-    // This `try/catch` block is only here for the interactive tutorial.
-    // Feel free to remove once you have Supabase connected.
-    const { supabase, response } = createMiddlewareClient(request)
+  const { supabase, response } = createMiddlewareClient(request)
 
-    // Refresh session if expired - required for Server Components
-    // https://supabase.com/docs/guides/auth/auth-helpers/nextjs#managing-session-with-middleware
-    await supabase.auth.getSession()
+  // Refresh session if expired - required for Server Components
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  const origin =
+    request.headers.get('origin') ||
+    request.headers.get('referer') ||
+    'http://localhost:3000'
+
+  // Route-based middleware logic
+  const pathname = request.nextUrl.pathname
+
+  // Admin-only routes
+  if (pathname.startsWith('/admin')) {
+    if (!session?.user) {
+      // Assuming `user.role` is available in session
+      return NextResponse.redirect(`${origin}/not-authorized`)
+    }
+
+    const { data: user } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', session.user.id)
+      .single()
+
+    if (!user?.is_admin) {
+      return NextResponse.redirect(`${origin}/not-authorized`)
+    }
 
     return response
-  } catch (e) {
-    // If you are here, a Supabase client could not be created!
-    // This is likely because you have not set up environment variables.
-    // Check out http://localhost:3000 for Next Steps.
-    return NextResponse.next({
-      request: { headers: request.headers },
-    })
   }
+
+  // Authenticated user-only routes
+  else if (pathname.startsWith('/user')) {
+    if (!session?.user) {
+      return NextResponse.redirect(`${origin}/login`)
+    }
+  }
+
+  // Any other route can be handled differently if needed
+  // Add custom logic here for other routes
+
+  return response
 }
 
 export const config = {
@@ -29,8 +57,9 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
      */
     '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/user/:path*', // Matches all routes under /user/
+    '/admin/:path*', // Matches all routes under /admin/
   ],
 }

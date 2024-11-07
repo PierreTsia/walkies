@@ -1,6 +1,6 @@
 'use client'
 
-import { useUserContext } from '@/providers/UserProvider'
+import { useLocaleContext } from '@/providers/LocaleProvider'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import { GlobeIcon } from 'lucide-react' // Optional icon import
 
 const LocaleSwitcher = () => {
-  const { locale, switchLocale } = useUserContext()
+  const { locale, switchLocale } = useLocaleContext()
 
   const handleLocaleChange = (newLocale: 'fr' | 'en') => {
     switchLocale(newLocale)
