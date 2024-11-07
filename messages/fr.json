@@ -47,5 +47,28 @@
     "password_field": "Mot de passe :",
     "submit_button": "Se connecter",
     "reset_button": "Annuler"
+  },
+  "Admin": {
+    "registration-requests": {
+      "data-table": {
+        "columns": {
+          "email": "Email",
+          "name": "Nom",
+          "content_text": "Contenu",
+          "status": "Statut",
+          "requested_at": "Envoyé le",
+          "reviewed_at": "Revu le"
+        },
+        "actions": {
+          "open": "Ouvrir le menu",
+          "view": "Voir la demande",
+          "copy": "Copier l'ID de la demande",
+          "approve": "Approuver",
+          "refuse": "Refuser",
+          "error": "Une erreur est survenue. {error}",
+          "success": "La demande a été traitée avec succès"
+        }
+      }
+    }
   }
 }
