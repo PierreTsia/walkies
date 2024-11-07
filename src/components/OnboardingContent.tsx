@@ -1,9 +1,8 @@
 'use client'
 
 import RegistrationRequestForm from '@/components/RegistrationRequestForm'
-import { User } from '@supabase/supabase-js'
-import { RegistrationRequest } from '@/types'
-import LoggedInUserContent from '@/components/LoggedInUserContent'
+
+import { RegistrationRequest, UserType } from '@/types'
 import OnboardingStepper from '@/components/OnboardingStepper'
 
 const OnboardingContent = ({
@@ -11,16 +10,12 @@ const OnboardingContent = ({
   user,
 }: {
   request: RegistrationRequest | null
-  user: User | null
+  user: UserType | null
 }) => {
-  if (user) {
-    return <LoggedInUserContent user={user} />
+  if (!request && !user) {
+    return <RegistrationRequestForm />
   }
-  return request ? (
-    <OnboardingStepper request={request} />
-  ) : (
-    <RegistrationRequestForm />
-  )
+  return <OnboardingStepper request={request} user={user} />
 }
 
 export default OnboardingContent

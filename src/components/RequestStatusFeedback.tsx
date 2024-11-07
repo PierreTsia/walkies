@@ -10,7 +10,7 @@ const RequestStatusFeedback = ({
 }) => {
   // eslint-disable-next-line react/jsx-no-undef
   return (
-    <Card className="justify center relative flex  h-[60px]  items-center bg-primary-foreground px-2">
+    <Card className="relative mx-auto flex h-[60px]  w-[80px]  items-center justify-center bg-primary-foreground px-2">
       <UserCog size={48} color="#3f51b5" strokeWidth={1.25} />
       <span
         className={`absolute -right-2 top-11 block h-[20px] w-[20px] rounded-full ${

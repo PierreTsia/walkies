@@ -1,12 +1,12 @@
 import { RegistrationRequest, RegistrationRequestStatus } from '@/types'
 import RequestStatusFeedback from '@/components/RequestStatusFeedback'
-import { DateTime } from 'luxon'
 import { useLocaleContext } from '@/providers/LocaleProvider'
 import { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import useDateFormats from '@/hooks/useDateFormats'
 import { Button } from '@/components/ui/button'
 import { useStepper } from '@/components/ui/stepper'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 const WithFeedBack = ({
   children,
@@ -16,19 +16,22 @@ const WithFeedBack = ({
   status: RegistrationRequestStatus
 }) => {
   return (
-    <div className="flex w-full flex-col items-center justify-center py-4">
-      <RequestStatusFeedback status={status} />
-      <div className="my-2 flex flex-col text-sm">{children}</div>
-    </div>
+    <Card>
+      <CardHeader>
+        <RequestStatusFeedback status={status} />
+      </CardHeader>
+      <CardContent>{children}</CardContent>
+    </Card>
   )
 }
 
-const WaitingForApproval = ({ request }: { request: RegistrationRequest }) => {
+const ApprovalStep = ({ request }: { request: RegistrationRequest | null }) => {
   const { locale } = useLocaleContext()
   const t = useTranslations('Onboarding.Steps')
   const { longDateTimeFormat } = useDateFormats()
   const { nextStep } = useStepper()
-  switch (request.status) {
+
+  switch (request?.status) {
     case 'refused':
       return (
         <WithFeedBack status={request.status}>
@@ -99,4 +102,4 @@ const WaitingForApproval = ({ request }: { request: RegistrationRequest }) => {
   }
 }
 
-export default WaitingForApproval
+export default ApprovalStep
