@@ -1,32 +1,51 @@
-import { RegistrationRequest } from '@/types'
+import { RegistrationRequest, UserType } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Step, Stepper, useStepper } from '@/components/ui/stepper'
 import { Card, CardContent } from '@/components/ui/card'
-import WaitingForApproval from '@/components/WaitingForApproval'
-import UserSignUpForm from '@/components/UserSignUpForm'
-import DogRegistrationForm from '@/components/DogRegistrationForm'
+import ApprovalStep from '@/components/ApprovalStep'
+import UserSignUpStep from '@/components/UserSignUpStep'
+import DogRegistrationStep from '@/components/DogRegistrationStep'
 import useOnboardingSteps from '@/hooks/useOnboardingSteps'
+import { useEffect } from 'react'
 
-const ActiveStep = ({ request }: { request: RegistrationRequest }) => {
+const ActiveStep = ({
+  request,
+  user,
+}: {
+  request: RegistrationRequest | null
+  user: UserType | null
+}) => {
   const steps = useOnboardingSteps()
-  const { activeStep: stepIndex } = useStepper()
+  const { activeStep: stepIndex, setStep } = useStepper()
 
   const step = steps[stepIndex]
+
+  useEffect(() => {
+    if (user) {
+      setStep(steps.length - 1)
+    }
+  }, [setStep, stepIndex, steps.length, user])
 
   if (!step) {
     return null
   }
   switch (step.id) {
     case 'waiting_for_approval':
-      return <WaitingForApproval request={request} />
+      return <ApprovalStep request={request} />
     case 'user_registration':
-      return <UserSignUpForm />
+      return <UserSignUpStep />
     case 'dog_registration':
-      return <DogRegistrationForm />
+      return <DogRegistrationStep />
   }
 }
 
-const OnboardingStepper = ({ request }: { request: RegistrationRequest }) => {
+const OnboardingStepper = ({
+  request,
+  user,
+}: {
+  request: RegistrationRequest | null
+  user: UserType | null
+}) => {
   const steps = useOnboardingSteps()
 
   return (
@@ -35,11 +54,11 @@ const OnboardingStepper = ({ request }: { request: RegistrationRequest }) => {
         {steps.map((stepProps, index) => {
           return (
             <Step key={stepProps.id} {...stepProps}>
-              <Card className="boder min-h-[90px] border-primary bg-primary/20">
-                <CardContent className="flex flex-col gap-4">
-                  <ActiveStep request={request} />
-                </CardContent>
-              </Card>
+              <div className="min-h-[90px] ">
+                <div className="flex flex-col gap-4">
+                  <ActiveStep request={request} user={user} />
+                </div>
+              </div>
             </Step>
           )
         })}

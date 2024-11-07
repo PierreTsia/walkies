@@ -1,6 +1,6 @@
-import { User } from '@supabase/supabase-js'
+import { UserType } from '@/types'
 
-const LoggedInUserContent = ({ user }: { user: User }) => {
+const LoggedInUserContent = ({ user }: { user: UserType }) => {
   return <span>Hey, {user?.email}! </span>
 }
 
