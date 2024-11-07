@@ -704,7 +704,6 @@ const HorizontalStep = React.forwardRef<HTMLDivElement, StepSharedProps>(
         data-invalid={localIsError}
         data-clickable={clickable}
         onClick={() => {
-          console.log('clickable', clickable)
           onClickStep?.(index || 0, setStep)
         }}
         ref={ref}

@@ -1,9 +1,22 @@
-import { useUserContext } from '@/providers/UserProvider'
+import { useLocaleContext } from '@/providers/LocaleProvider'
 import { DateTime } from 'luxon'
 
 const useDateFormats = () => {
-  const { locale } = useUserContext()
+  const { locale } = useLocaleContext()
   const dateLocale = locale === 'en' ? 'en-US' : 'fr-FR'
+
+  const shortDateFormat = (dateString: string) => {
+    return DateTime.fromISO(dateString).toLocaleString(
+      {
+        month: 'short',
+        day: '2-digit',
+        year: '2-digit',
+      },
+      {
+        locale: dateLocale,
+      },
+    )
+  }
 
   const longDateTimeFormat = (dateString: string) => {
     return DateTime.fromISO(dateString).toLocaleString(
@@ -22,6 +35,7 @@ const useDateFormats = () => {
 
   return {
     longDateTimeFormat,
+    shortDateFormat,
   }
 }
 

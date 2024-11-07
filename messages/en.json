@@ -47,5 +47,28 @@
     "password_field": "Password :",
     "submit_button": "Login",
     "reset_button": "Cancel"
+  },
+  "Admin": {
+    "registration-requests": {
+      "data-table": {
+        "columns": {
+          "email": "Email",
+          "name": "Name",
+          "content_text": "Content",
+          "status": "Status",
+          "requested_at": "Requested at",
+          "reviewed_at": "Reviewed at"
+        },
+        "actions": {
+          "open": "Open menu",
+          "view": "View request",
+          "copy": "Copy request ID",
+          "approve": "Approve",
+          "refuse": "Deny",
+          "error": "An error occurred while processing your request. {error}",
+          "success": "The request has been successfully processed."
+        }
+      }
+    }
   }
 }

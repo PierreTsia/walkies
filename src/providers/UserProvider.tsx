@@ -1,36 +1,30 @@
-'use client';
+'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import Cookies from 'js-cookie';
+import { createContext, useContext } from 'react'
+import { User } from '@supabase/supabase-js'
 
-type Locale = 'fr' | 'en';
-const UserContext = createContext<{ locale: string; switchLocale: (l: Locale) => void }>({
-  locale: 'en',
-  switchLocale: () => {},
-});
+interface UserContextType {
+  user: User | null
+}
 
-export const UserProvider = ({ children }: { children: ReactNode }) => {
+const UserContext = createContext<UserContextType | undefined>(undefined)
 
-  const [locale, setLocale] = useState<Locale>( 'en');
+export function useUser() {
+  const context = useContext(UserContext)
+  if (context === undefined) {
+    throw new Error('useUser must be used within a UserProvider')
+  }
+  return context.user
+}
 
-  useEffect(() => {
-    const savedLocale = Cookies.get('locale') as Locale;
-    console.log('savedLocale', savedLocale);
-    if (savedLocale && savedLocale !== locale) {
-      setLocale(savedLocale);
-    }
-  }, [locale]);
-
-  const switchLocale = (newLocale: Locale) => {
-    setLocale(newLocale);
-    Cookies.set('locale', newLocale, { expires: 365 }); // Set locale cookie for future visits
-  };
-
+export default function UserProvider({
+  user,
+  children,
+}: {
+  user: User | null
+  children: React.ReactNode
+}) {
   return (
-    <UserContext.Provider value={{ locale, switchLocale }}>
-      {children}
-    </UserContext.Provider>
-  );
-};
-
-export const useUserContext = () => useContext(UserContext);
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+  )
+}
