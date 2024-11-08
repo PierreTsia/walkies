@@ -72,12 +72,13 @@ export default function Login({
 
   return (
     <div className="mt-4 flex w-full flex-1 flex-col justify-start gap-2 px-8">
-      <Link href="/">
-        <Button size="sm" variant="ghost">
+      <Button asChild size="lg" variant="ghost" className="max-w-[180px]">
+        <Link href="/">
           <ChevronLeft size={16} />
           {t('back_button')}
-        </Button>
-      </Link>
+        </Link>
+      </Button>
+
       <div className="mx-auto my-auto w-full max-w-[400px]">
         {searchParams?.message && (
           <Alert variant="destructive" className="animate-in">

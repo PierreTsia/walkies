@@ -9,10 +9,7 @@ export async function middleware(request: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  const origin =
-    request.headers.get('origin') ||
-    request.headers.get('referer') ||
-    'http://localhost:3000'
+  const origin = `${request.nextUrl.protocol}//${request.nextUrl.host}`
 
   // Route-based middleware logic
   const pathname = request.nextUrl.pathname

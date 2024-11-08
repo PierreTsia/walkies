@@ -15,7 +15,7 @@ const LocaleSwitcher = () => {
 
   const handleLocaleChange = (newLocale: 'fr' | 'en') => {
     switchLocale(newLocale)
-    location.reload() // Reload the page to apply the new locale
+    location.reload()
   }
 
   return (

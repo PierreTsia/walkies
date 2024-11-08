@@ -28,18 +28,19 @@ export default async function Index() {
     .eq('email', existingRequestEmail)
     .single()
 
-  // TODO handle dogs asscoiated with user
-  // @ts-ignore
-  const dogs = []
+  const { data: dogs, error: viewError } = await supabase
+    .from('dog_with_owners')
+    .select('*')
+    .eq('primary_owner_id', user?.id ?? '')
 
-  const hasFullfilledOnboarding = user && dogs?.length //
+  const hasFulfilledOnboarding = user && dogs?.length
 
   return (
     <div className="flex w-full flex-1 flex-col items-center pt-2 ">
       <div className="flex  flex-1 flex-col  px-3">
         <Header />
         <main className="flex w-full   max-w-[1200px] flex-1  flex-col gap-6 lg:mx-auto">
-          {hasFullfilledOnboarding ? (
+          {hasFulfilledOnboarding ? (
             <LoggedInUserContent user={user} />
           ) : (
             <OnboardingContent request={existingRequest} user={user} />

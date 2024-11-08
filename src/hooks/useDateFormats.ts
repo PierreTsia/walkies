@@ -18,6 +18,12 @@ const useDateFormats = () => {
     )
   }
 
+  const datePickerDateFormat = (date: string | Date) => {
+    return new Intl.DateTimeFormat(dateLocale, {
+      dateStyle: 'medium',
+    }).format(new Date(date))
+  }
+
   const longDateTimeFormat = (dateString: string) => {
     return DateTime.fromISO(dateString).toLocaleString(
       {
@@ -36,6 +42,7 @@ const useDateFormats = () => {
   return {
     longDateTimeFormat,
     shortDateFormat,
+    datePickerDateFormat,
   }
 }
 

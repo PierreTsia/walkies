@@ -1,7 +1,6 @@
 import { RegistrationRequest, UserType } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Step, Stepper, useStepper } from '@/components/ui/stepper'
-import { Card, CardContent } from '@/components/ui/card'
 import ApprovalStep from '@/components/ApprovalStep'
 import UserSignUpStep from '@/components/UserSignUpStep'
 import DogRegistrationStep from '@/components/DogRegistrationStep'
