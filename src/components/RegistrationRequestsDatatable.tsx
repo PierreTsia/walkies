@@ -1,12 +1,15 @@
 'use client'
 
+import { useMemo } from 'react'
+import useGetRegistrationRequests from '@/hooks/useGetRegistrationRequests'
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-
+import { RegistrationRequest, RegistrationRequestStatus } from '@/types'
+import { createColumns } from '@/app/admin/registration-requests/columns'
 import {
   Table,
   TableBody,
@@ -15,19 +18,21 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useMemo } from 'react'
+import useUpdateRegistrationRequestStatus from '@/hooks/useUpdateRegistrationRequestStatus'
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  onStatusUpdate?: (id: string, status: string) => void
-}
+const RegistrationRequestsDatatable = () => {
+  const { data, refetch } = useGetRegistrationRequests()
+  const { mutateAsync } = useUpdateRegistrationRequestStatus()
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  onStatusUpdate,
-}: DataTableProps<TData, TValue>) {
+  const handleStatusUpdate = (
+    id: string,
+    status: RegistrationRequestStatus,
+  ) => {
+    void mutateAsync({ id, status })
+    void refetch()
+  }
+  const columns: ColumnDef<RegistrationRequest>[] =
+    createColumns(handleStatusUpdate)
   const memoizedColumns = useMemo(() => columns, [columns])
   const memoizedData = useMemo(() => data, [data])
 
@@ -37,7 +42,6 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     enableColumnResizing: true,
   })
-
   return (
     <div className="rounded-md border ">
       <Table className={'!text-[0.9rem]'}>
@@ -85,3 +89,5 @@ export function DataTable<TData, TValue>({
     </div>
   )
 }
+
+export default RegistrationRequestsDatatable

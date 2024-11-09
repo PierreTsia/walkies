@@ -3,7 +3,7 @@ import { render, RenderOptions } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { retry: false } },
+  defaultOptions: { queries: { retry: false, retryOnMount: false } },
 })
 
 const Wrapper = ({ children }: { children: ReactElement }) => (

@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@/test/test-utils'
-import ReactQueryExample from './ReactQueryExample'
+import ReactQueryExample from './RegistrationRequestsDatatable'
 import { server } from '@/mocks/server'
 import { HttpResponse, http } from 'msw'
 

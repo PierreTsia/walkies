@@ -2,7 +2,6 @@ import Header from '@/components/Header'
 import { cookies } from 'next/headers'
 import { createServerClient } from '@/utils/supabase'
 
-import ReactQueryExample from '@/components/ReactQueryExample'
 import MemberContent from '@/components/MemberContent'
 
 export default async function Index() {
@@ -30,7 +29,6 @@ export default async function Index() {
         <Header />
         <main className="flex w-full max-w-[1200px] flex-1  flex-col gap-6 lg:mx-auto">
           <MemberContent user={user} />
-          <ReactQueryExample />
         </main>
       </div>
     </div>
