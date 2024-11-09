@@ -11,16 +11,32 @@ export async function GET() {
   const { data, error } = await supabase
     .from('registration_requests')
     .select('*')
-    .order('requested_at', { ascending: false })
 
   if (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch registration requests' },
-      { status: 500 },
+    return new NextResponse(
+      JSON.stringify({ error: 'Failed to fetch registration requests' }),
+      {
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : '*',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+      },
     )
   }
 
-  return NextResponse.json(data)
+  return new NextResponse(JSON.stringify(data), {
+    headers: {
+      'Access-Control-Allow-Origin': process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : '*',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  })
 }
 
 export async function PUT(request: Request) {
@@ -41,6 +57,21 @@ export async function PUT(request: Request) {
       { status: 401 },
     )
   }
+  if (!authUser) {
+    return new NextResponse(
+      JSON.stringify({ error: 'Failed to authenticate user' }),
+      {
+        status: 401,
+        headers: {
+          'Access-Control-Allow-Origin': process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : '*',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+      },
+    )
+  }
 
   const { data: user } = await supabase
     .from('users')
@@ -49,7 +80,16 @@ export async function PUT(request: Request) {
     .single()
 
   if (!user) {
-    return NextResponse.json({ error: 'Failed to find user' }, { status: 404 })
+    return new NextResponse(JSON.stringify({ error: 'Failed to find user' }), {
+      status: 401,
+      headers: {
+        'Access-Control-Allow-Origin': process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    })
   }
 
   const { error } = await supabase
@@ -61,14 +101,32 @@ export async function PUT(request: Request) {
     })
     .eq('id', id)
 
-  console.log('error', error)
-
   if (error) {
-    return NextResponse.json(
-      { error: 'Failed to update registration request status' },
-      { status: 500 },
+    return new NextResponse(
+      JSON.stringify({ error: 'Failed to update registration request status' }),
+      {
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : '*',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+      },
     )
   }
 
-  return NextResponse.json({ message: 'Registration request updated' })
+  return new NextResponse(
+    JSON.stringify({ message: 'Registration request updated' }),
+    {
+      headers: {
+        'Access-Control-Allow-Origin': process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    },
+  )
 }
