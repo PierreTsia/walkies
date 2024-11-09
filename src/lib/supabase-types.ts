@@ -9,6 +9,98 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      dog_additional_owners: {
+        Row: {
+          additional_owner_id: string
+          dog_id: string
+        }
+        Insert: {
+          additional_owner_id: string
+          dog_id: string
+        }
+        Update: {
+          additional_owner_id?: string
+          dog_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'dog_additional_owners_additional_owner_id_fkey'
+            columns: ['additional_owner_id']
+            isOneToOne: false
+            referencedRelation: 'dog_with_owners'
+            referencedColumns: ['primary_owner_id']
+          },
+          {
+            foreignKeyName: 'dog_additional_owners_additional_owner_id_fkey'
+            columns: ['additional_owner_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'dog_additional_owners_dog_id_fkey'
+            columns: ['dog_id']
+            isOneToOne: false
+            referencedRelation: 'dog_with_owners'
+            referencedColumns: ['dog_id']
+          },
+          {
+            foreignKeyName: 'dog_additional_owners_dog_id_fkey'
+            columns: ['dog_id']
+            isOneToOne: false
+            referencedRelation: 'dogs'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      dogs: {
+        Row: {
+          breed: string | null
+          created_at: string | null
+          dob: string | null
+          gender: Database['public']['Enums']['dog_gender']
+          id: string
+          image_url: string | null
+          name: string
+          owner_id: string | null
+        }
+        Insert: {
+          breed?: string | null
+          created_at?: string | null
+          dob?: string | null
+          gender: Database['public']['Enums']['dog_gender']
+          id?: string
+          image_url?: string | null
+          name: string
+          owner_id?: string | null
+        }
+        Update: {
+          breed?: string | null
+          created_at?: string | null
+          dob?: string | null
+          gender?: Database['public']['Enums']['dog_gender']
+          id?: string
+          image_url?: string | null
+          name?: string
+          owner_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'dogs_owner_id_fkey'
+            columns: ['owner_id']
+            isOneToOne: false
+            referencedRelation: 'dog_with_owners'
+            referencedColumns: ['primary_owner_id']
+          },
+          {
+            foreignKeyName: 'dogs_owner_id_fkey'
+            columns: ['owner_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       registration_requests: {
         Row: {
           content_text: string | null
@@ -45,6 +137,13 @@ export type Database = {
             foreignKeyName: 'registration_requests_reviewed_by_fkey'
             columns: ['reviewed_by']
             isOneToOne: false
+            referencedRelation: 'dog_with_owners'
+            referencedColumns: ['primary_owner_id']
+          },
+          {
+            foreignKeyName: 'registration_requests_reviewed_by_fkey'
+            columns: ['reviewed_by']
+            isOneToOne: false
             referencedRelation: 'users'
             referencedColumns: ['id']
           },
@@ -58,6 +157,7 @@ export type Database = {
           id: string
           is_admin: boolean | null
           name: string
+          onboarding_completed: boolean | null
         }
         Insert: {
           auth_id?: string | null
@@ -66,6 +166,7 @@ export type Database = {
           id?: string
           is_admin?: boolean | null
           name: string
+          onboarding_completed?: boolean | null
         }
         Update: {
           auth_id?: string | null
@@ -74,17 +175,33 @@ export type Database = {
           id?: string
           is_admin?: boolean | null
           name?: string
+          onboarding_completed?: boolean | null
         }
         Relationships: []
       }
     }
     Views: {
-      [_ in never]: never
+      dog_with_owners: {
+        Row: {
+          additional_owners: Json | null
+          breed: string | null
+          created_at: string | null
+          dob: string | null
+          dog_id: string | null
+          dog_name: string | null
+          image_url: string | null
+          primary_owner_email: string | null
+          primary_owner_id: string | null
+          primary_owner_name: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
     }
     Enums: {
+      dog_gender: 'male' | 'female'
       request_status: 'pending' | 'approved' | 'refused'
     }
     CompositeTypes: {

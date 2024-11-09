@@ -1,22 +1,15 @@
-import { RegistrationRequest, UserType } from '@/types'
-import { Button } from '@/components/ui/button'
 import { Step, Stepper, useStepper } from '@/components/ui/stepper'
-import { Card, CardContent } from '@/components/ui/card'
 import ApprovalStep from '@/components/ApprovalStep'
 import UserSignUpStep from '@/components/UserSignUpStep'
 import DogRegistrationStep from '@/components/DogRegistrationStep'
 import useOnboardingSteps from '@/hooks/useOnboardingSteps'
 import { useEffect } from 'react'
+import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
 
-const ActiveStep = ({
-  request,
-  user,
-}: {
-  request: RegistrationRequest | null
-  user: UserType | null
-}) => {
+const ActiveStep = () => {
   const steps = useOnboardingSteps()
   const { activeStep: stepIndex, setStep } = useStepper()
+  const { user, request } = useOnboardingContext()
 
   const step = steps[stepIndex]
 
@@ -31,7 +24,7 @@ const ActiveStep = ({
   }
   switch (step.id) {
     case 'waiting_for_approval':
-      return <ApprovalStep request={request} />
+      return <ApprovalStep />
     case 'user_registration':
       return <UserSignUpStep />
     case 'dog_registration':
@@ -39,13 +32,7 @@ const ActiveStep = ({
   }
 }
 
-const OnboardingStepper = ({
-  request,
-  user,
-}: {
-  request: RegistrationRequest | null
-  user: UserType | null
-}) => {
+const OnboardingStepper = () => {
   const steps = useOnboardingSteps()
 
   return (
@@ -56,58 +43,14 @@ const OnboardingStepper = ({
             <Step key={stepProps.id} {...stepProps}>
               <div className="min-h-[90px] ">
                 <div className="flex flex-col gap-4">
-                  <ActiveStep request={request} user={user} />
+                  <ActiveStep />
                 </div>
               </div>
             </Step>
           )
         })}
-        <Footer />
       </Stepper>
     </div>
-  )
-}
-
-const Footer = () => {
-  const {
-    nextStep,
-    prevStep,
-    resetSteps,
-    isDisabledStep,
-    hasCompletedAllSteps,
-    isLastStep,
-    isOptionalStep,
-  } = useStepper()
-
-  return (
-    <>
-      {hasCompletedAllSteps && (
-        <div className="my-2 flex h-40 items-center justify-center rounded-md border bg-secondary text-primary">
-          <h1 className="text-xl">Woohoo! All steps completed! 🎉</h1>
-        </div>
-      )}
-      <div className="flex w-full justify-center gap-2">
-        {hasCompletedAllSteps ? (
-          <Button size="sm" onClick={resetSteps}>
-            Reset
-          </Button>
-        ) : (
-          <>
-            <Button
-              disabled={isDisabledStep}
-              onClick={prevStep}
-              size="sm"
-              variant="secondary"
-            >
-              Prev
-            </Button>
-            <Button size="sm" onClick={nextStep}>
-              {isLastStep ? 'Finish' : isOptionalStep ? 'Skip' : 'Next'}
-            </Button>
-          </>
-        )}
-      </div>
-    </>
   )
 }
 

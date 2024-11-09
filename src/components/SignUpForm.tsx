@@ -9,12 +9,12 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { toast, useToast } from '@/hooks/use-toast'
+import { useState } from 'react'
+import FormButtons from '@/components/FormButtons'
 
 const createSignUpSchema = (translate: (key: string) => string) =>
   z
@@ -41,13 +41,16 @@ const SignUpForm = ({ signUp }: { signUp: (data: any) => Promise<void> }) => {
   /* const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)*/
   const t = useTranslations('SignUp')
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(createSignUpSchema(t)),
   })
 
   const onSubmit = async (data: SignUpFormData) => {
+    setIsLoading(true)
     await signUp(data)
+    setIsLoading(false)
   }
 
   return (
@@ -95,12 +98,12 @@ const SignUpForm = ({ signUp }: { signUp: (data: any) => Promise<void> }) => {
             </FormItem>
           )}
         />
-        <div className="flex justify-end gap-x-2">
-          <Button variant="secondary" onClick={() => form.reset()}>
-            {t('reset_button')}
-          </Button>
-          <Button type="submit">{t('submit_button')}</Button>
-        </div>
+        <FormButtons
+          reset={form.reset}
+          isLoading={isLoading}
+          confirmText={t('submit_button')}
+          cancelText={t('reset_button')}
+        />
       </form>
     </Form>
   )
