@@ -8,7 +8,6 @@ import { TablesInsert } from '@/lib/supabase-types'
 export async function signUp(data: SignUpFormData): Promise<boolean> {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
-
   // ensure the is a request approved in db
   const { data: request, error: fetchRequestError } = await supabase
     .from('registration_requests')
@@ -34,15 +33,6 @@ export async function signUp(data: SignUpFormData): Promise<boolean> {
   })
   if (signUpError || !user) {
     console.log('SIGN UP ERROR', signUpError?.message)
-    return false
-  }
-
-  const { error: onboardingError } = await supabase
-    .from('onboarding_process_complete')
-    .insert([{ auth_id: user?.id, is_completed: false }])
-
-  if (onboardingError) {
-    console.log('ONBOARDING ERROR', onboardingError.message)
     return false
   }
 
