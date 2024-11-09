@@ -32,22 +32,22 @@ export async function signUp(data: SignUpFormData): Promise<boolean> {
     email: data.email,
     password: data.password,
   })
-
   if (signUpError || !user) {
     console.log('SIGN UP ERROR', signUpError?.message)
     return false
   }
 
-  // Fetch the current session to ensure the user is authenticated
-  const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession()
+  const { error: onboardingError } = await supabase
+    .from('onboarding_process_complete')
+    .insert([{ auth_id: user?.id, is_completed: false }])
 
-  if (sessionError || !session) {
-    console.log('SESSION ERROR', sessionError?.message)
+  if (onboardingError) {
+    console.log('ONBOARDING ERROR', onboardingError.message)
     return false
   }
+
+  // insert user
+
   const userData: TablesInsert<'users'> = {
     email: data.email,
     name: request.name,

@@ -2,12 +2,14 @@ import Header from '@/components/Header'
 import { cookies } from 'next/headers'
 import { createServerClient } from '@/utils/supabase'
 
-import ReactQueryExample from '@/components/ReactQueryExample'
-import MemberContent from '@/components/MemberContent'
+import OnboardingContent from '@/components/OnboardingContent'
 
 export default async function Index() {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
+
+  const existingRequestEmail =
+    cookieStore.get('registration_request')?.value ?? ''
 
   const {
     data: { user: authUser },
@@ -17,6 +19,12 @@ export default async function Index() {
     .from('users')
     .select('*')
     .eq('auth_id', authUser?.id ?? '')
+    .single()
+
+  const { data: existingRequest, error } = await supabase
+    .from('registration_requests')
+    .select('*')
+    .eq('email', existingRequestEmail)
     .single()
 
   const { data: dogs, error: viewError } = await supabase
@@ -29,8 +37,11 @@ export default async function Index() {
       <div className="flex  flex-1 flex-col  px-3">
         <Header />
         <main className="flex w-full max-w-[1200px] flex-1  flex-col gap-6 lg:mx-auto">
-          <MemberContent user={user} />
-          <ReactQueryExample />
+          <OnboardingContent
+            request={existingRequest}
+            user={user}
+            dogs={dogs}
+          />
         </main>
       </div>
     </div>
