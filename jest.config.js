@@ -19,6 +19,9 @@ const customJestConfig = {
   testEnvironmentOptions: {
     customExportConditions: [''],
   },
+  testPathIgnorePatterns: [
+    '<rootDir>/e2e/', // Exclude the e2e directory
+  ],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
