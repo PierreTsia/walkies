@@ -50,11 +50,17 @@ export async function PUT(request: Request) {
 
   const {
     data: { session },
+    error: sessionError,
   } = await supabase.auth.getSession()
+
+  if (sessionError) {
+    console.error('Session error:', sessionError)
+  }
 
   const authUser = session?.user
 
   if (!authUser) {
+    console.log('Failed to authenticate user:', session)
     return new NextResponse(
       JSON.stringify({ error: 'Failed to authenticate user' }),
       {
