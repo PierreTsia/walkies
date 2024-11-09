@@ -1,13 +1,18 @@
 'use client'
 
 import { createContext, useContext } from 'react'
-import { User } from '@supabase/supabase-js'
 import { DogWithOwner, RegistrationRequest, UserType } from '@/types'
 
 interface OnboardingContextType {
   request: RegistrationRequest | null
   user: UserType | null
   dogs: DogWithOwner[] | null
+  hasAlreadySavedDog: boolean
+  setHasAlreadySavedDog: (value: boolean) => void
+  dogName: string
+  setDogName: (value: string) => void
+  hasCompletedOnboarding: boolean
+  setHasCompletedOnboarding: (value: boolean) => void
 }
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(
@@ -24,16 +29,14 @@ export function useOnboardingContext() {
   return context
 }
 
-export default function OnboardingProvider({
-  user,
-  request,
-  dogs,
+export default function OnboardingContextProvider({
   children,
+  ...props
 }: OnboardingContextType & {
   children: React.ReactNode
 }) {
   return (
-    <OnboardingContext.Provider value={{ user, request, dogs }}>
+    <OnboardingContext.Provider value={props}>
       {children}
     </OnboardingContext.Provider>
   )

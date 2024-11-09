@@ -44,16 +44,7 @@ export async function registerDog(data: DogRegistrationFormData) {
   ])
 
   if (insertError) {
-    throw new Error(insertError.message)
-  }
-
-  const { error: onboardingError } = await supabase
-    .from('onboarding_process_complete')
-    .update({ is_completed: true })
-    .eq('auth_id', authId)
-
-  if (onboardingError) {
-    console.log('ONBOARDING ERROR', onboardingError.message)
+    console.log('Error inserting dog', insertError.message)
     return false
   }
 

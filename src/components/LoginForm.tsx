@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 
 import {
@@ -26,6 +27,7 @@ type LoginFormValues = z.infer<typeof FormSchema>
 
 const LoginForm = ({ signIn }: { signIn: SubmitHandler<LoginFormValues> }) => {
   const t = useTranslations('Login')
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<LoginFormValues>({
@@ -38,7 +40,12 @@ const LoginForm = ({ signIn }: { signIn: SubmitHandler<LoginFormValues> }) => {
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     setIsLoading(true)
-    await signIn(data)
+    const isSignedIn = await signIn(data)
+    const redirectUrl = isSignedIn
+      ? '/'
+      : '/login?message=Could not authenticate user'
+    router.push(redirectUrl)
+
     setIsLoading(false)
   }
 

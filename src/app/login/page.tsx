@@ -38,11 +38,7 @@ export default function Login({
       password,
     })
 
-    if (error) {
-      return redirect('/login?message=Could not authenticate user')
-    }
-
-    return redirect('/')
+    return !error
   }
 
   const t = useTranslations('Login')

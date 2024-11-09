@@ -10,12 +10,30 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getSession()
 
   const origin = `${request.nextUrl.protocol}//${request.nextUrl.host}`
+  console.log('origin middleware', origin)
 
   // Route-based middleware logic
   const pathname = request.nextUrl.pathname
 
+  if (pathname === '/') {
+    if (!session?.user) {
+      return NextResponse.redirect(`${origin}/onboarding`)
+    }
+
+    const { data: onboardingStatus } = await supabase
+      .from('onboarding_process_complete')
+      .select('is_completed')
+      .eq('auth_id', session.user.id)
+      .single()
+
+    // Redirect to /onboarding if the onboarding process is not completed
+    if (!onboardingStatus?.is_completed) {
+      return NextResponse.redirect(`${origin}/onboarding`)
+    }
+  }
+
   // Admin-only routes
-  if (pathname.startsWith('/admin')) {
+  else if (pathname.startsWith('/admin')) {
     if (!session?.user) {
       // Assuming `user.role` is available in session
       return NextResponse.redirect(`${origin}/not-authorized`)
@@ -34,10 +52,21 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  // Authenticated user-only routes
-  else if (pathname.startsWith('/user')) {
+  // Onboarding check for onboarding route `/onboarding`
+  else if (pathname.startsWith('/onboarding')) {
     if (!session?.user) {
-      return NextResponse.redirect(`${origin}/login`)
+      return response
+    }
+
+    const { data: onboardingStatus } = await supabase
+      .from('onboarding_process_complete')
+      .select('is_completed')
+      .eq('auth_id', session?.user?.id ?? '')
+      .single()
+
+    // Redirect to / if the onboarding process is completed
+    if (onboardingStatus?.is_completed) {
+      return NextResponse.redirect(`${origin}/`)
     }
   }
 
@@ -56,7 +85,7 @@ export const config = {
      * - favicon.ico (favicon file)
      */
     '/((?!_next/static|_next/image|favicon.ico).*)',
-    '/user/:path*', // Matches all routes under /user/
     '/admin/:path*', // Matches all routes under /admin/
+    '/onboarding/:path*', // Matches all routes under /onboarding/
   ],
 }

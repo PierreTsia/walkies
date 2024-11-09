@@ -10,8 +10,8 @@ import { getLocale, getMessages } from 'next-intl/server'
 import { LocaleProvider } from '@/providers/LocaleProvider'
 import { Toaster } from '@/components/ui/toaster'
 import Footer from '@/components/Footer'
-import { cookies } from 'next/headers'
-import { createServerClient } from '@/utils/supabase'
+import { logout } from '@/app/actions/logout'
+
 import UserProviderWrapper from '@/providers/UserProviderWrapper'
 
 const defaultUrl = process.env.VERCEL_URL
@@ -32,22 +32,6 @@ export default async function RootLayout({
   const locale = await getLocale()
 
   const messages = await getMessages()
-
-  const logout = async () => {
-    'use server'
-
-    const cookieStore = cookies()
-    const supabase = createServerClient(cookieStore)
-
-    await supabase.auth.signOut()
-
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    }
-  }
 
   return (
     <html lang={locale ?? 'en'} className={GeistSans.className}>

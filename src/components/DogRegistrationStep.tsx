@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Card,
   CardContent,
@@ -7,12 +9,13 @@ import {
 } from '@/components/ui/card'
 import DogRegistrationForm from '@/components/DogRegistrationForm'
 import { useTranslations } from 'next-intl'
-import { DogWithOwner } from '@/types'
-import { useOnboardingContext } from '@/providers/OnboardingProvider'
+import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
+import UploadDogImage from '@/components/UploadDogImage'
 
 const DogRegistrationStep = () => {
   const t = useTranslations('DogRegistrationStep')
-  const { dogs } = useOnboardingContext()
+  const { hasAlreadySavedDog, dogName } = useOnboardingContext()
+
   return (
     <Card>
       <CardHeader>
@@ -20,11 +23,7 @@ const DogRegistrationStep = () => {
         <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
-        {dogs?.length ? (
-          <span>We now want to upload a nice pic of {dogs[0].dog_name}</span>
-        ) : (
-          <DogRegistrationForm />
-        )}
+        {hasAlreadySavedDog ? <UploadDogImage /> : <DogRegistrationForm />}
       </CardContent>
     </Card>
   )

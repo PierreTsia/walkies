@@ -30,7 +30,7 @@ const DogBreedSelect = ({
   isDisabled: boolean
   setValue: UseFormSetValue<DogRegistrationFormData>
 }) => {
-  const t = useTranslations('DogRegistrationForm.breeds')
+  const t = useTranslations('DogRegistrationStep.breeds')
 
   const breedOptions = useMemo(
     () =>

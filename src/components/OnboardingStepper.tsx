@@ -6,7 +6,7 @@ import UserSignUpStep from '@/components/UserSignUpStep'
 import DogRegistrationStep from '@/components/DogRegistrationStep'
 import useOnboardingSteps from '@/hooks/useOnboardingSteps'
 import { useEffect } from 'react'
-import { useOnboardingContext } from '@/providers/OnboardingProvider'
+import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
 
 const ActiveStep = () => {
   const steps = useOnboardingSteps()
