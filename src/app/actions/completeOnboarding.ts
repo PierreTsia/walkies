@@ -2,9 +2,8 @@
 
 import { cookies } from 'next/headers'
 import { createServerClient } from '@/utils/supabase'
-import { DogRegistrationFormData } from '@/components/DogRegistrationForm'
 
-export async function completeOnboarding() {
+export async function completeUserOnboarding() {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
@@ -19,13 +18,13 @@ export async function completeOnboarding() {
     return false
   }
 
-  const { error: onboardingError } = await supabase
-    .from('onboarding_process_complete')
-    .update({ is_completed: true })
+  const { error } = await supabase
+    .from('users')
+    .update({ onboarding_completed: true })
     .eq('auth_id', authId)
 
-  if (onboardingError) {
-    console.log('ONBOARDING ERROR', onboardingError.message)
+  if (error) {
+    console.error('Error updating user', error)
     return false
   }
 

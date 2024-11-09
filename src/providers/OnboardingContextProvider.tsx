@@ -11,8 +11,6 @@ interface OnboardingContextType {
   setHasAlreadySavedDog: (value: boolean) => void
   dogName: string
   setDogName: (value: string) => void
-  hasCompletedOnboarding: boolean
-  setHasCompletedOnboarding: (value: boolean) => void
 }
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(

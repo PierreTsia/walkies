@@ -3,8 +3,6 @@ import { cookies } from 'next/headers'
 import { createServerClient } from '@/utils/supabase'
 
 import OnboardingContent from '@/components/OnboardingContent'
-import MemberContent from '@/components/MemberContent'
-import { redirect } from 'next/navigation'
 
 export default async function Index() {
   const cookieStore = cookies()
@@ -34,12 +32,6 @@ export default async function Index() {
     .select('*')
     .eq('primary_owner_id', user?.id ?? '')
 
-  const { data: onboarding, error: onboardingError } = await supabase
-    .from('onboarding_process_complete')
-    .select('*')
-    .eq('auth_id', user?.auth_id ?? '')
-    .single()
-
   return (
     <div className="flex w-full flex-1 flex-col items-center pt-2 ">
       <div className="flex  flex-1 flex-col  px-3">
@@ -49,7 +41,6 @@ export default async function Index() {
             request={existingRequest}
             user={user}
             dogs={dogs}
-            onboarding={onboarding}
           />
         </main>
       </div>

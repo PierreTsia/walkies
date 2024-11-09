@@ -1,5 +1,3 @@
-import { DogWithOwner, RegistrationRequest, UserType } from '@/types'
-import { Button } from '@/components/ui/button'
 import { Step, Stepper, useStepper } from '@/components/ui/stepper'
 import ApprovalStep from '@/components/ApprovalStep'
 import UserSignUpStep from '@/components/UserSignUpStep'
@@ -26,7 +24,7 @@ const ActiveStep = () => {
   }
   switch (step.id) {
     case 'waiting_for_approval':
-      return <ApprovalStep request={request} />
+      return <ApprovalStep />
     case 'user_registration':
       return <UserSignUpStep />
     case 'dog_registration':

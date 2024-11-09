@@ -2,7 +2,7 @@
 
 import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
 import { useRouter } from 'next/navigation'
-import { completeOnboarding } from '@/app/actions/completeOnboarding'
+import { completeUserOnboarding } from '@/app/actions/completeOnboarding'
 import { Button } from '@/components/ui/button'
 
 const UploadDogImage = () => {
@@ -10,10 +10,10 @@ const UploadDogImage = () => {
   const router = useRouter()
 
   const handleCompleteOnboarding = async () => {
-    const isSuccess = await completeOnboarding()
+    const isSuccess = await completeUserOnboarding()
     setHasAlreadySavedDog(isSuccess)
     if (isSuccess) {
-      await router.push('/')
+      router.push('/')
     }
   }
 

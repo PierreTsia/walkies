@@ -7,6 +7,7 @@ import useDateFormats from '@/hooks/useDateFormats'
 import { Button } from '@/components/ui/button'
 import { useStepper } from '@/components/ui/stepper'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
 
 const WithFeedBack = ({
   children,
@@ -25,11 +26,11 @@ const WithFeedBack = ({
   )
 }
 
-const ApprovalStep = ({ request }: { request: RegistrationRequest | null }) => {
-  const { locale } = useLocaleContext()
+const ApprovalStep = () => {
   const t = useTranslations('Onboarding.Steps')
   const { longDateTimeFormat } = useDateFormats()
   const { nextStep } = useStepper()
+  const { request } = useOnboardingContext()
 
   switch (request?.status) {
     case 'refused':

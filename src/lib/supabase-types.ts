@@ -101,21 +101,6 @@ export type Database = {
           },
         ]
       }
-      onboarding_process_complete: {
-        Row: {
-          auth_id: string
-          is_completed: boolean
-        }
-        Insert: {
-          auth_id: string
-          is_completed?: boolean
-        }
-        Update: {
-          auth_id?: string
-          is_completed?: boolean
-        }
-        Relationships: []
-      }
       registration_requests: {
         Row: {
           content_text: string | null
@@ -172,6 +157,7 @@ export type Database = {
           id: string
           is_admin: boolean | null
           name: string
+          onboarding_completed: boolean | null
         }
         Insert: {
           auth_id?: string | null
@@ -180,6 +166,7 @@ export type Database = {
           id?: string
           is_admin?: boolean | null
           name: string
+          onboarding_completed?: boolean | null
         }
         Update: {
           auth_id?: string | null
@@ -188,6 +175,7 @@ export type Database = {
           id?: string
           is_admin?: boolean | null
           name?: string
+          onboarding_completed?: boolean | null
         }
         Relationships: []
       }
