@@ -87,8 +87,28 @@
       }
     }
   },
-  "Dogs": {
+  "DogRegistrationStep": {
+    "title": "Enregistrement du chien",
+    "description": "Parlez-nous de votre ami à quatre pattes !",
+    "male": "Mâle",
+    "female": "Femelle",
+    "breed_label": "Connaissez-vous la race de votre chien ?",
+    "gender_label": "Genre",
+    "submit_button": "Soumettre",
+    "reset_button": "Réinitialiser",
+    "dob": "Date de naissance",
+    "dob_placeholder": "Choisissez une date",
+    "name": "Nom du chien",
+    "success_toast": "Le chien a été enregistré avec succès",
+    "error_toast": "Une erreur est survenue lors de l'enregistrement du chien",
+    "errors": {
+      "dog_dob_invalid": "La date de naissance ne doit pas être dans le futur, et votre chien ne peut pas avoir plus de 20 ans !",
+      "dog_name_min_length": "Le nom du chien doit comporter au moins 3 caractères",
+      "dog_gender_required": "Le genre du chien est requis",
+      "dog_dob_required": "La date de naissance du chien est requise"
+    },
     "breeds": {
+      "select_breed": "Selectionnez une race",
       "affenpinscher": "Affenpinscher",
       "afghan_hound": "Lévrier Afghan",
       "aidi": "Aidi",

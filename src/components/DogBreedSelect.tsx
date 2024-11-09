@@ -1,7 +1,7 @@
 import { UseFormSetValue } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
 import { useMemo } from 'react'
-import breedCodes from '@/domain/breeds'
+import breedCodes from '@/breeds'
 import {
   Popover,
   PopoverContent,
@@ -30,7 +30,7 @@ const DogBreedSelect = ({
   isDisabled: boolean
   setValue: UseFormSetValue<DogRegistrationFormData>
 }) => {
-  const t = useTranslations('Dogs.breeds')
+  const t = useTranslations('DogRegistrationForm.breeds')
 
   const breedOptions = useMemo(
     () =>
@@ -54,7 +54,7 @@ const DogBreedSelect = ({
               !value && 'text-muted-foreground',
             )}
           >
-            {value ? t(value) : 'Select breed'}
+            {value ? t(value) : t('select_breed')}
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </FormControl>

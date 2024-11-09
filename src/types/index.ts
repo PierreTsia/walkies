@@ -1,4 +1,4 @@
-import { Tables, TablesInsert } from '@/lib/supabase-types'
+import { Tables } from '@/lib/supabase-types'
 
 export type RegistrationRequest = Tables<'registration_requests'>
 
@@ -6,4 +6,4 @@ export type RegistrationRequestStatus = RegistrationRequest['status']
 
 export type UserType = Tables<'users'>
 
-export type DogInsertPayload = TablesInsert<'dogs'>
+export type DogWithOwner = Tables<'dog_with_owners'>

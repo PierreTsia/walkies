@@ -58,6 +58,7 @@ export type Database = {
           breed: string | null
           created_at: string | null
           dob: string | null
+          gender: Database['public']['Enums']['dog_gender']
           id: string
           image_url: string | null
           name: string
@@ -67,6 +68,7 @@ export type Database = {
           breed?: string | null
           created_at?: string | null
           dob?: string | null
+          gender: Database['public']['Enums']['dog_gender']
           id?: string
           image_url?: string | null
           name: string
@@ -76,6 +78,7 @@ export type Database = {
           breed?: string | null
           created_at?: string | null
           dob?: string | null
+          gender?: Database['public']['Enums']['dog_gender']
           id?: string
           image_url?: string | null
           name?: string
@@ -210,6 +213,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      dog_gender: 'male' | 'female'
       request_status: 'pending' | 'approved' | 'refused'
     }
     CompositeTypes: {

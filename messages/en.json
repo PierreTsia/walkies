@@ -87,8 +87,13 @@
       }
     }
   },
-  "DogRegistrationForm": {
+  "DogRegistrationStep": {
+    "title": "Dog registration",
+    "description": "Tell us everything about your furry friend !",
+    "male": "Male",
+    "female": "Female",
     "breed_label": "Do you know the breed of your dog?",
+    "gender_label": "Gender",
     "submit_button": "Submit",
     "reset_button": "Reset",
     "dob": "Date of birth",
@@ -97,10 +102,13 @@
     "success_toast": "Dog has been successfully registered",
     "error_toast": "An error occurred while registering the dog",
     "errors": {
-      "dog_dob_invalid": "DoB should not be in the future nor before 2000",
-      "dog_name_min_length": "Dog name must be at least 3 characters long"
+      "dog_dob_invalid": "DoB should not be in the future and your dog cannot be more than 20 years old !",
+      "dog_name_min_length": "Dog name must be at least 3 characters long",
+      "dog_gender_required": "Dog's gender is required",
+      "dog_dob_required": "Dog's date of birth is required"
     },
     "breeds": {
+      "select_breed": "Select a breed",
       "affenpinscher": "Affenpinscher",
       "afghan_hound": "Afghan Hound",
       "aidi": "Aidi",

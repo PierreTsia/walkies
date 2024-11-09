@@ -4,6 +4,7 @@ import { createServerClient } from '@/utils/supabase'
 
 import OnboardingContent from '@/components/OnboardingContent'
 import LoggedInUserContent from '@/components/LoggedInUserContent'
+import OnboardingProvider from '@/providers/OnboardingProvider'
 
 export default async function Index() {
   const cookieStore = cookies()
@@ -33,18 +34,30 @@ export default async function Index() {
     .select('*')
     .eq('primary_owner_id', user?.id ?? '')
 
-  const hasFulfilledOnboarding = user && dogs?.length
+  const { data: onboarding, error: onboardingError } = await supabase
+    .from('onboarding_process_complete')
+    .select('*')
+    .eq('auth_id', user?.auth_id ?? '')
+    .single()
+
+  const hasFulfilledOnboarding = user && onboarding?.is_completed
 
   return (
     <div className="flex w-full flex-1 flex-col items-center pt-2 ">
       <div className="flex  flex-1 flex-col  px-3">
         <Header />
         <main className="flex w-full   max-w-[1200px] flex-1  flex-col gap-6 lg:mx-auto">
-          {hasFulfilledOnboarding ? (
-            <LoggedInUserContent user={user} />
-          ) : (
-            <OnboardingContent request={existingRequest} user={user} />
-          )}
+          <OnboardingProvider request={existingRequest} user={user} dogs={dogs}>
+            {hasFulfilledOnboarding ? (
+              <LoggedInUserContent user={user} />
+            ) : (
+              <OnboardingContent
+                request={existingRequest}
+                user={user}
+                dogs={dogs}
+              />
+            )}
+          </OnboardingProvider>
         </main>
       </div>
     </div>
