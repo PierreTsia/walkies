@@ -4,6 +4,19 @@ import { cookies } from 'next/headers'
 import { DateTime } from 'luxon'
 import { RegistrationRequestStatus } from '@/types'
 
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : '*',
+  'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
+// Handle CORS preflight requests
+export async function OPTIONS() {
+  return new NextResponse(null, { headers: CORS_HEADERS })
+}
+
 export async function GET() {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
@@ -11,31 +24,20 @@ export async function GET() {
   const { data, error } = await supabase
     .from('registration_requests')
     .select('*')
+    .order('requested_at', { ascending: false })
 
   if (error) {
     return new NextResponse(
       JSON.stringify({ error: 'Failed to fetch registration requests' }),
       {
         status: 500,
-        headers: {
-          'Access-Control-Allow-Origin': process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}`
-            : '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        },
+        headers: CORS_HEADERS,
       },
     )
   }
 
   return new NextResponse(JSON.stringify(data), {
-    headers: {
-      'Access-Control-Allow-Origin': process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : '*',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
+    headers: CORS_HEADERS,
   })
 }
 
@@ -51,24 +53,13 @@ export async function PUT(request: Request) {
   } = await supabase.auth.getSession()
 
   const authUser = session?.user
-  if (!authUser) {
-    return NextResponse.json(
-      { error: 'Failed to authenticate user' },
-      { status: 401 },
-    )
-  }
+
   if (!authUser) {
     return new NextResponse(
       JSON.stringify({ error: 'Failed to authenticate user' }),
       {
         status: 401,
-        headers: {
-          'Access-Control-Allow-Origin': process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}`
-            : '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        },
+        headers: CORS_HEADERS,
       },
     )
   }
@@ -82,13 +73,7 @@ export async function PUT(request: Request) {
   if (!user) {
     return new NextResponse(JSON.stringify({ error: 'Failed to find user' }), {
       status: 401,
-      headers: {
-        'Access-Control-Allow-Origin': process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}`
-          : '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      },
+      headers: CORS_HEADERS,
     })
   }
 
@@ -106,13 +91,7 @@ export async function PUT(request: Request) {
       JSON.stringify({ error: 'Failed to update registration request status' }),
       {
         status: 500,
-        headers: {
-          'Access-Control-Allow-Origin': process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}`
-            : '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        },
+        headers: CORS_HEADERS,
       },
     )
   }
@@ -120,13 +99,7 @@ export async function PUT(request: Request) {
   return new NextResponse(
     JSON.stringify({ message: 'Registration request updated' }),
     {
-      headers: {
-        'Access-Control-Allow-Origin': process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}`
-          : '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      },
+      headers: CORS_HEADERS,
     },
   )
 }
