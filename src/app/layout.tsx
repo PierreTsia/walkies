@@ -46,12 +46,12 @@ export default async function RootLayout({
                 disableTransitionOnChange
               >
                 <ReactQueryProvider>
-                  <main className="flex min-h-[calc(100vh-90px)] flex-col items-center">
+                  <main className="flex min-h-[100vh] flex-col items-center">
                     {children}
                     <Toaster />
                     <Analytics />
+                    <Footer />
                   </main>
-                  <Footer />
                   <ReactQueryDevtools initialIsOpen={false} />
                 </ReactQueryProvider>
               </ThemeProvider>

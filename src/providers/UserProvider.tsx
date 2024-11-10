@@ -1,7 +1,6 @@
 'use client'
 
 import { createContext, useContext } from 'react'
-import { User } from '@supabase/supabase-js'
 import { UserType } from '@/types'
 
 interface UserContextType {

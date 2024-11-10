@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 import { createServerClient } from '@/utils/supabase'
 
-export async function getMe() {
+const getMe = async () => {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
   const {
@@ -16,5 +16,11 @@ export async function getMe() {
     .eq('auth_id', authUser?.id ?? '')
     .single()
 
-  return user || null
+  if (error) {
+    console.error('Error fetching user', error)
+  }
+
+  return user
 }
+
+export default getMe
