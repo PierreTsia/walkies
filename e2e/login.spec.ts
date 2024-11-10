@@ -1,9 +1,9 @@
 import { authenticatedTest, expect } from './fixtures'
 import { BrowserContext } from '@playwright/test'
 
-authenticatedTest.describe('Admin > Registration Requests', () => {
+authenticatedTest.describe('Authenticated Tests', () => {
   authenticatedTest(
-    'should access the registration request page  as admin',
+    'should access protected content as admin',
     async ({
       authenticatedAdminContext,
     }: {
@@ -19,7 +19,7 @@ authenticatedTest.describe('Admin > Registration Requests', () => {
   )
 
   authenticatedTest(
-    'should not access the registration request page  as as regular user',
+    'should access protected content as regular user',
     async ({
       authenticatedUserContext,
     }: {

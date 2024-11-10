@@ -1,38 +1,21 @@
-import { APIRequestContext, BrowserContext } from '@playwright/test'
+// utils/authHelpers.ts
+import { Page } from '@playwright/test'
 
-export async function authenticateUser(
-  context: BrowserContext,
-  apiRequest: APIRequestContext,
-  email: string,
-  password: string,
-) {
-  const URL = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : 'http://localhost:3000'
+export async function uiLogin(page: Page, email: string, password: string) {
+  await page.goto('/login')
 
-  const response = await apiRequest.post(`${URL}/api/auth/login`, {
-    data: { email, password },
-  })
+  // Wait until the login page is fully loaded
+  await page.waitForURL('/login')
 
-  if (!response.ok())
-    throw new Error(
-      `Login failed with status ${response.status()}: ${await response.text()}`,
-    )
+  const emailInput = page.locator('input#email')
+  await emailInput.fill(email)
 
-  const sessionCookies = (await response.headersArray())
-    .filter((header) => header.name.toLowerCase() === 'set-cookie')
-    .map((header) => {
-      const [nameValue, ...attributes] = header.value.split('; ')
-      const [name, value] = nameValue.split('=')
-      return {
-        name,
-        value,
-        domain: 'localhost',
-        path: '/',
-        httpOnly: attributes.includes('HttpOnly'),
-        secure: attributes.includes('Secure'),
-      }
-    })
+  const passwordInput = page.locator('input#password')
+  await passwordInput.fill(password)
 
-  await context.addCookies(sessionCookies)
+  const submitButton = page.locator('button[type="submit"]')
+  await submitButton.click()
+
+  // Ensure successful navigation to the home page
+  await page.waitForURL('/')
 }
