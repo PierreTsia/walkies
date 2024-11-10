@@ -12,7 +12,7 @@ const signIn = async (data: { email: string; password: string }) => {
     password,
   })
 
-  return !error
+  return { success: !error, error }
 }
 
 export default signIn

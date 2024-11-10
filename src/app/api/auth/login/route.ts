@@ -15,12 +15,16 @@ export async function POST(request: Request) {
     }
 
     // Call the signIn function with the provided credentials
-    const isAuthenticated = await signIn({ email, password })
+    const { success, error } = await signIn({ email, password })
 
     // If authentication fails, return an error
-    if (!isAuthenticated) {
+    if (!success) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
+        {
+          error: `Invalid email or password: ${email}  - ${password} with error ${JSON.stringify(
+            error,
+          )}`,
+        },
         { status: 401 },
       )
     }
