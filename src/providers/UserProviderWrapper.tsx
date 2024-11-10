@@ -1,6 +1,5 @@
-import { getAuthenticatedUser } from '@/app/actions/getAuthenticatedUser'
 import UserProvider from '@/providers/UserProvider'
-import { getMe } from '@/app/actions/getMe'
+import getMe from '@/app/actions/getMe'
 
 export default async function UserProviderWrapper({
   children,

@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/table'
 import useMutateRegistrationRequestStatus from '@/hooks/useMutateRegistrationRequestStatus'
 
-const RegistrationRequestsDatatable = async () => {
+const RegistrationRequestsDatatable = () => {
   const { data } = useQueryRegistrationRequests()
   const { mutateAsync } = useMutateRegistrationRequestStatus()
 
