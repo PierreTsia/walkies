@@ -20,16 +20,48 @@ import {
 } from '@/components/ui/table'
 import useUpdateRegistrationRequestStatus from '@/hooks/useUpdateRegistrationRequestStatus'
 import { useUser } from '@/providers/UserProvider'
+import { createBrowserClient } from '@/utils/supabase'
+import { DateTime } from 'luxon'
+import { toast } from '@/hooks/use-toast'
 
 const RegistrationRequestsDatatable = async () => {
   const { data, refetch } = useGetRegistrationRequests()
-  const { mutateAsync } = useUpdateRegistrationRequestStatus()
   const user = useUser()
+  const supabase = createBrowserClient()
+  const updateRequestStatus = async (
+    id: string,
+    status: RegistrationRequestStatus,
+  ) => {
+    const { error } = await supabase
+      .from('registration_requests')
+      .update({
+        status,
+        reviewed_at: DateTime.now().toISO(),
+        reviewed_by: user?.id,
+      })
+      .eq('id', id)
+
+    if (error) {
+      toast({
+        title: 'Error',
+        description: error.message,
+        variant: 'destructive',
+      })
+      return
+    }
+
+    toast({
+      title: 'success',
+      variant: 'success',
+    })
+  }
+
   const handleStatusUpdate = (
     id: string,
     status: RegistrationRequestStatus,
   ) => {
-    void mutateAsync({ id, status, authId: user?.auth_id ?? '' })
+    void updateRequestStatus(id, status)
+    void refetch()
   }
   const columns: ColumnDef<RegistrationRequest>[] =
     createColumns(handleStatusUpdate)
