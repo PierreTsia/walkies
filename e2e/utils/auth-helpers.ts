@@ -14,7 +14,10 @@ export async function authenticateUser(
     data: { email, password },
   })
 
-  if (!response.ok()) throw new Error('Login failed')
+  if (!response.ok())
+    throw new Error(
+      `Login failed with status ${response.status()}: ${await response.text()}`,
+    )
 
   const sessionCookies = (await response.headersArray())
     .filter((header) => header.name.toLowerCase() === 'set-cookie')
