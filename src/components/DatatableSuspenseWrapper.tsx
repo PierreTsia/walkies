@@ -1,11 +1,10 @@
 'use client'
 import { ReactNode, Suspense } from 'react'
-const LoadingDatatable = () => {
-  return <div>Loading registration requests...</div>
-}
+
+import DatatableSkeleton from '@/components/DatatableSkeleton'
 
 const DatatableSuspenseWrapper = ({ children }: { children: ReactNode }) => {
-  return <Suspense fallback={<LoadingDatatable />}>{children}</Suspense>
+  return <Suspense fallback={<DatatableSkeleton />}>{children}</Suspense>
 }
 
 export default DatatableSuspenseWrapper
