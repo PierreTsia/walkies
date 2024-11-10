@@ -8,15 +8,16 @@ const DatatableSkeleton = ({ rowCount = 10 }: { rowCount?: number }) => {
 
       {/* Rows Skeleton */}
       {[...Array(rowCount)].map((_, i) => (
-        <SkeletonRow key={i} />
+        // eslint-disable-next-line react/jsx-key
+        <SkeletonRow key={`${i}--row`} />
       ))}
     </div>
   )
 }
 
-const SkeletonRow = ({ key }: { key?: number }) => {
+const SkeletonRow = () => {
   return (
-    <div key={key} className="flex w-full space-x-4">
+    <div className="flex w-full space-x-4">
       <Skeleton className="h-6 flex-grow" />
       <Skeleton className="h-6 flex-grow" />
       <Skeleton className="h-6 flex-grow" />

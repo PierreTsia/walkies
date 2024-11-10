@@ -1,6 +1,21 @@
 import { useSuspenseQuery, UseSuspenseQueryResult } from '@tanstack/react-query'
-import { axiosInstance } from '../../axios-instance'
 import { RegistrationRequest } from '@/types'
+
+import { createBrowserClient } from '@/utils/supabase'
+
+const getRegistrationRequests = async () => {
+  const supabase = createBrowserClient()
+
+  const { data, error } = await supabase
+    .from('registration_requests')
+    .select('*')
+    .order('requested_at', { ascending: false })
+
+  if (error) {
+    console.error('Error registrations requests', error)
+  }
+  return data
+}
 
 const useQueryRegistrationRequests = (): UseSuspenseQueryResult<
   RegistrationRequest[],
@@ -8,11 +23,7 @@ const useQueryRegistrationRequests = (): UseSuspenseQueryResult<
 > =>
   useSuspenseQuery({
     queryKey: ['/api/registration-requests'],
-    queryFn: async () => {
-      const { data } = await axiosInstance.get('/api/registration-requests')
-
-      return data
-    },
+    queryFn: getRegistrationRequests,
   })
 
 export default useQueryRegistrationRequests
