@@ -31,6 +31,7 @@ const RegistrationRequestsDatatable = async () => {
   const updateRequestStatus = async (
     id: string,
     status: RegistrationRequestStatus,
+    refetch: Refetch,
   ) => {
     const { error } = await supabase
       .from('registration_requests')
@@ -54,14 +55,16 @@ const RegistrationRequestsDatatable = async () => {
       title: 'success',
       variant: 'success',
     })
+    void refetch()
   }
+
+  type Refetch = typeof refetch
 
   const handleStatusUpdate = (
     id: string,
     status: RegistrationRequestStatus,
   ) => {
-    void updateRequestStatus(id, status)
-    void refetch()
+    void updateRequestStatus(id, status, refetch)
   }
   const columns: ColumnDef<RegistrationRequest>[] =
     createColumns(handleStatusUpdate)
