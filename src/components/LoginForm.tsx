@@ -1,8 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import {
@@ -15,8 +14,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
 import FormButtons from '@/components/FormButtons'
+import useSignInUser from '@/hooks/useSignInUser'
 
 const FormSchema = z.object({
   email: z.string().email('Please enter a valid email address '),
@@ -25,10 +24,9 @@ const FormSchema = z.object({
 
 type LoginFormValues = z.infer<typeof FormSchema>
 
-const LoginForm = ({ signIn }: { signIn: SubmitHandler<LoginFormValues> }) => {
+const LoginForm = () => {
   const t = useTranslations('Login')
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const { mutateAsync, isError, isPending } = useSignInUser()
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(FormSchema),
@@ -38,21 +36,10 @@ const LoginForm = ({ signIn }: { signIn: SubmitHandler<LoginFormValues> }) => {
     },
   })
 
-  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    setIsLoading(true)
-    const isSignedIn = await signIn(data)
-    const redirectUrl = isSignedIn
-      ? '/'
-      : '/login?message=Could not authenticate user'
-    router.push(redirectUrl)
-
-    setIsLoading(false)
-  }
-
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit((d) => mutateAsync(d))}
         className="block w-full gap-x-2"
       >
         <FormField
@@ -88,7 +75,7 @@ const LoginForm = ({ signIn }: { signIn: SubmitHandler<LoginFormValues> }) => {
         />
         <FormButtons
           reset={form.reset}
-          isLoading={isLoading}
+          isLoading={isPending}
           confirmText={t('submit_button')}
           cancelText={t('reset_button')}
         />

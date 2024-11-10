@@ -12,7 +12,9 @@ const signIn = async (data: { email: string; password: string }) => {
     password,
   })
 
-  return { success: !error, error }
+  if (error) {
+    throw new Error(`Error signing in ${error.message}`)
+  }
 }
 
 export default signIn

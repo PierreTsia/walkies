@@ -50,7 +50,7 @@ export default function Login({
           </CardHeader>
 
           <CardContent>
-            <LoginForm signIn={signIn} />
+            <LoginForm />
           </CardContent>
         </Card>
       </div>

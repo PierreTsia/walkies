@@ -19,7 +19,7 @@ const Footer = ({ logout }: FooterProps) => {
       <div className="flex w-full justify-end gap-2">
         <ThemeToggle />
         <LocaleSwitcher />
-        {user && <LogoutButton logout={logout} />}
+        {user && <LogoutButton />}
       </div>
     </footer>
   )

@@ -3,16 +3,23 @@
 import { LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import useSIgnOutUser from '@/hooks/useSignOutUser'
 
-const LogoutButton = ({ logout }: { logout: () => Promise<any> }) => {
+const LogoutButton = () => {
   const router = useRouter()
+  const { mutateAsync, isPending } = useSIgnOutUser()
   const handleLogout = async () => {
-    await logout()
+    await mutateAsync()
     router.push('/login')
   }
 
   return (
-    <Button variant="outline" size="icon" onClick={handleLogout}>
+    <Button
+      disabled={isPending}
+      variant="outline"
+      size="icon"
+      onClick={handleLogout}
+    >
       <LogOut />
     </Button>
   )
