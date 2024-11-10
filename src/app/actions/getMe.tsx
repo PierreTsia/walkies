@@ -7,13 +7,13 @@ export async function getMe() {
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user: authUser },
+  } = await supabase.auth.getUser()
 
   const { data: user, error } = await supabase
     .from('users')
     .select('*')
-    .eq('auth_id', session?.user?.id ?? '')
+    .eq('auth_id', authUser?.id ?? '')
     .single()
 
   return user || null

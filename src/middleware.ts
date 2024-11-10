@@ -6,8 +6,8 @@ export async function middleware(request: NextRequest) {
 
   // Refresh session if expired - required for Server Components
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user: authUser },
+  } = await supabase.auth.getUser()
 
   const origin = `${request.nextUrl.protocol}//${request.nextUrl.host}`
 
@@ -15,20 +15,21 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   if (pathname === '/login') {
-    if (session?.user) {
+    if (authUser) {
       return NextResponse.redirect(`${origin}/`)
     }
     return response
   }
 
   if (pathname === '/') {
-    if (!session?.user) {
+    if (!authUser) {
+      // here is my problem I guess only on CI after ui login
       return NextResponse.redirect(`${origin}/onboarding`)
     }
     const { data: user } = await supabase
       .from('users')
       .select('*')
-      .eq('auth_id', session.user.id)
+      .eq('auth_id', authUser.id)
       .single()
 
     // Redirect to /onboarding if the onboarding process is not completed
@@ -41,7 +42,7 @@ export async function middleware(request: NextRequest) {
 
   // Admin-only routes
   if (pathname.startsWith('/admin')) {
-    if (!session?.user) {
+    if (!authUser) {
       // Assuming `user.role` is available in session
       return NextResponse.redirect(`${origin}/not-authorized`)
     }
@@ -49,7 +50,7 @@ export async function middleware(request: NextRequest) {
     const { data: user } = await supabase
       .from('users')
       .select('*')
-      .eq('auth_id', session.user.id)
+      .eq('auth_id', authUser.id)
       .single()
 
     if (!user?.is_admin) {
@@ -61,13 +62,13 @@ export async function middleware(request: NextRequest) {
 
   // Onboarding check for onboarding route `/onboarding`
   if (pathname.startsWith('/onboarding')) {
-    if (!session?.user) {
+    if (!authUser) {
       return response
     }
     const { data: user } = await supabase
       .from('users')
       .select('*')
-      .eq('auth_id', session.user.id)
+      .eq('auth_id', authUser.id)
       .single()
 
     if (user?.onboarding_completed) {

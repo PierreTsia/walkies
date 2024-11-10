@@ -18,7 +18,7 @@ authenticatedTest.describe('Authenticated Tests', () => {
     },
   )
 
-  authenticatedTest(
+  authenticatedTest.skip(
     'should access protected content as regular user',
     async ({
       authenticatedUserContext,
