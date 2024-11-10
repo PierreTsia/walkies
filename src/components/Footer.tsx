@@ -1,7 +1,6 @@
 import ThemeToggle from '@/components/ThemeToggle'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import LogoutButton from '@/components/LogoutButton'
-import { useUser } from '@/providers/UserProvider'
 
 const Footer = () => {
   return (
