@@ -15,7 +15,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import UserProviderWrapper from '@/providers/UserProviderWrapper'
 
-import ReactQueryExample from '@/components/ReactQueryExample'
+import ReactQueryExample from '@/components/RegistrationRequestsDatatable'
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
@@ -54,7 +54,7 @@ export default async function RootLayout({
                     <Analytics />
                   </main>
                   <Footer logout={logout} />
-                  {/*   <ReactQueryDevtools initialIsOpen={false} />*/}
+                  <ReactQueryDevtools initialIsOpen={false} />
                 </ReactQueryProvider>
               </ThemeProvider>
               <SpeedInsights />
