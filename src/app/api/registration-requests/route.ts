@@ -42,38 +42,20 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
-  const { status, id }: { status: RegistrationRequestStatus; id: string } =
+  const {
+    status,
+    id,
+    authId,
+  }: { status: RegistrationRequestStatus; id: string; authId: string } =
     await request.json()
 
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
 
-  const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession()
-
-  if (sessionError) {
-    console.error('Session error:', sessionError)
-  }
-
-  const authUser = session?.user
-
-  if (!authUser) {
-    console.log('Failed to authenticate user:', session)
-    return new NextResponse(
-      JSON.stringify({ error: 'Failed to authenticate user' }),
-      {
-        status: 401,
-        headers: CORS_HEADERS,
-      },
-    )
-  }
-
   const { data: user } = await supabase
     .from('users')
     .select('id')
-    .eq('auth_id', authUser.id)
+    .eq('auth_id', authId)
     .single()
 
   if (!user) {

@@ -19,17 +19,17 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import useUpdateRegistrationRequestStatus from '@/hooks/useUpdateRegistrationRequestStatus'
+import { useUser } from '@/providers/UserProvider'
 
-const RegistrationRequestsDatatable = () => {
+const RegistrationRequestsDatatable = async () => {
   const { data, refetch } = useGetRegistrationRequests()
   const { mutateAsync } = useUpdateRegistrationRequestStatus()
-
+  const user = useUser()
   const handleStatusUpdate = (
     id: string,
     status: RegistrationRequestStatus,
   ) => {
-    void mutateAsync({ id, status })
-    void refetch()
+    void mutateAsync({ id, status, authId: user?.auth_id ?? '' })
   }
   const columns: ColumnDef<RegistrationRequest>[] =
     createColumns(handleStatusUpdate)
