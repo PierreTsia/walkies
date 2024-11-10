@@ -2,7 +2,7 @@ import { useSuspenseQuery, UseSuspenseQueryResult } from '@tanstack/react-query'
 import { axiosInstance } from '../../axios-instance'
 import { RegistrationRequest } from '@/types'
 
-const useGetRegistrationRequests = (): UseSuspenseQueryResult<
+const useQueryRegistrationRequests = (): UseSuspenseQueryResult<
   RegistrationRequest[],
   Error
 > =>
@@ -15,4 +15,4 @@ const useGetRegistrationRequests = (): UseSuspenseQueryResult<
     },
   })
 
-export default useGetRegistrationRequests
+export default useQueryRegistrationRequests

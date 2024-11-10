@@ -1,25 +1,37 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { axiosInstance } from '../../axios-instance'
 import { RegistrationRequestStatus } from '@/types'
 import { toast } from '@/hooks/use-toast'
+import { createBrowserClient } from '@/utils/supabase'
+import { DateTime } from 'luxon'
+import { useUser } from '@/providers/UserProvider'
 
-type UpdateStatusParams = {
+type MutateRequestStatusParams = {
   id: string
   status: RegistrationRequestStatus
-  authId: string
 }
 
-const useUpdateStatus = () => {
+const useMutateRequestStatus = () => {
   const queryClient = useQueryClient()
+  const supabase = createBrowserClient()
+  const user = useUser()
+
+  const updateRequestStatus = async (
+    id: string,
+    status: RegistrationRequestStatus,
+  ) => {
+    await supabase
+      .from('registration_requests')
+      .update({
+        status,
+        reviewed_at: DateTime.now().toISO(),
+        reviewed_by: user?.id,
+      })
+      .eq('id', id)
+  }
 
   return useMutation({
-    mutationFn: async ({ id, status, authId }: UpdateStatusParams) => {
-      await axiosInstance.put(`/api/registration-requests`, {
-        id,
-        status,
-        authId,
-      })
-    },
+    mutationFn: async ({ id, status }: MutateRequestStatusParams) =>
+      updateRequestStatus(id, status),
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: ['/api/registration-requests'],
@@ -44,4 +56,4 @@ const useUpdateStatus = () => {
   })
 }
 
-export default useUpdateStatus
+export default useMutateRequestStatus

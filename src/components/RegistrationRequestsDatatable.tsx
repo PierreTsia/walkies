@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import useGetRegistrationRequests from '@/hooks/useGetRegistrationRequests'
+import useQueryRegistrationRequests from '@/hooks/useQueryRegistrationRequests'
 import {
   ColumnDef,
   flexRender,
@@ -18,53 +18,17 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import useUpdateRegistrationRequestStatus from '@/hooks/useUpdateRegistrationRequestStatus'
-import { useUser } from '@/providers/UserProvider'
-import { createBrowserClient } from '@/utils/supabase'
-import { DateTime } from 'luxon'
-import { toast } from '@/hooks/use-toast'
+import useMutateRegistrationRequestStatus from '@/hooks/useMutateRegistrationRequestStatus'
 
 const RegistrationRequestsDatatable = async () => {
-  const { data, refetch } = useGetRegistrationRequests()
-  const user = useUser()
-  const supabase = createBrowserClient()
-  const updateRequestStatus = async (
-    id: string,
-    status: RegistrationRequestStatus,
-    refetch: Refetch,
-  ) => {
-    const { error } = await supabase
-      .from('registration_requests')
-      .update({
-        status,
-        reviewed_at: DateTime.now().toISO(),
-        reviewed_by: user?.id,
-      })
-      .eq('id', id)
-
-    if (error) {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      })
-      return
-    }
-
-    toast({
-      title: 'success',
-      variant: 'success',
-    })
-    void refetch()
-  }
-
-  type Refetch = typeof refetch
+  const { data } = useQueryRegistrationRequests()
+  const { mutateAsync } = useMutateRegistrationRequestStatus()
 
   const handleStatusUpdate = (
     id: string,
     status: RegistrationRequestStatus,
   ) => {
-    void updateRequestStatus(id, status, refetch)
+    void mutateAsync({ id, status })
   }
   const columns: ColumnDef<RegistrationRequest>[] =
     createColumns(handleStatusUpdate)
