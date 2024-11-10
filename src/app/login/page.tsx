@@ -1,7 +1,5 @@
 import Link from 'next/link'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { createServerClient } from '@/utils/supabase'
+import signIn from '@/app/actions/signIn'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, Terminal } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -26,45 +24,7 @@ export default function Login({
 }: {
   searchParams: { message: string }
 }) {
-  const signIn = async (data: LoginFormValues) => {
-    'use server'
-
-    const { email, password } = data
-    const cookieStore = cookies()
-    const supabase = createServerClient(cookieStore)
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-
-    return !error
-  }
-
   const t = useTranslations('Login')
-
-  /*  const signUp = async (data: LoginFormValues) => {
-    'use server'
-
-    const origin = headers().get('origin')
-    const { email, password } = data
-    const cookieStore = cookies()
-    const supabase = createServerClient(cookieStore)
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      return redirect('/login?message=Could not authenticate user')
-    }
-
-    return redirect('/login?message=Check email to continue sign in process')
-  }*/
 
   return (
     <div className="mt-4 flex w-full flex-1 flex-col justify-start gap-2 px-8">

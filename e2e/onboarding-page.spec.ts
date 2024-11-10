@@ -34,4 +34,71 @@ test.describe('Onboarding page', () => {
     await loginButton.click()
     await expect(page).toHaveURL('/login')
   })
+
+  test('should display an onboarding form', async ({ page }) => {
+    await page.goto('/')
+
+    await expect(page).toHaveURL('/onboarding')
+    const nameInput = await page.locator('input#name')
+    await expect(nameInput).toBeVisible()
+    const emailInput = await page.locator('input#email')
+    await expect(emailInput).toBeVisible()
+    const contentText = await page.locator('textarea#content_text')
+    await expect(contentText).toBeVisible()
+    const submitButton = await page.locator('button[type="submit"]')
+    await expect(submitButton).toBeVisible()
+  })
+
+  test('should not be able to submit without required fields', async ({
+    page,
+  }) => {
+    await page.goto('/')
+
+    await expect(page).toHaveURL('/onboarding')
+
+    const submitButton = await page.locator('button[type="submit"]')
+    await expect(submitButton).toBeVisible()
+
+    await expect(
+      page.locator('p:has-text("Your request is currently on status ")'),
+    ).not.toBeVisible()
+
+    await submitButton.click()
+    await expect(page).toHaveURL('/onboarding')
+
+    const emailInput = await page.locator('input#email')
+    await emailInput.fill('invalid-email')
+
+    const nameInput = await page.locator('input#name')
+    await nameInput.fill('t')
+
+    await submitButton.click()
+
+    await expect(
+      page.locator('p:has-text("Your request is currently on status ")'),
+    ).not.toBeVisible()
+  })
+
+  test('should let the user send a request', async ({ page }) => {
+    await page.goto('/')
+
+    await expect(page).toHaveURL('/onboarding')
+    const nameInput = await page.locator('input#name')
+    await nameInput.fill('test USER-CI')
+
+    const emailInput = await page.locator('input#email')
+    await emailInput.fill('test-user-ci+pending@mail.com')
+
+    const contentText = await page.locator('textarea#content_text')
+
+    await contentText.fill('I am a test user for CI with a pending status')
+
+    const submitButton = await page.locator('button[type="submit"]')
+
+    await submitButton.click()
+
+    await expect(
+      page.locator('p:has-text("Your request is currently on status ")'),
+    ).toBeVisible()
+  })
 })

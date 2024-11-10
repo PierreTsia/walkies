@@ -62,7 +62,7 @@ const LoginForm = ({ signIn }: { signIn: SubmitHandler<LoginFormValues> }) => {
             <FormItem className="my-4">
               <FormLabel>{t('email_field')}</FormLabel>
               <FormControl>
-                <Input placeholder="joe@email.com" {...field} />
+                <Input placeholder="joe@email.com" id="email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -75,7 +75,12 @@ const LoginForm = ({ signIn }: { signIn: SubmitHandler<LoginFormValues> }) => {
             <FormItem className="my-4">
               <FormLabel>{t('password_field')}</FormLabel>
               <FormControl>
-                <Input placeholder="••••••" type="password" {...field} />
+                <Input
+                  placeholder="••••••"
+                  type="password"
+                  id="password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
