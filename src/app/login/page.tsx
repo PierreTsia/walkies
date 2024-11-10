@@ -14,11 +14,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-interface LoginFormValues {
-  email: string
-  password: string
-}
-
 export default function Login({
   searchParams,
 }: {
@@ -50,7 +45,7 @@ export default function Login({
           </CardHeader>
 
           <CardContent>
-            <LoginForm signIn={signIn} />
+            <LoginForm />
           </CardContent>
         </Card>
       </div>
