@@ -21,6 +21,7 @@ const LogoutButton = () => {
         disabled={isPending}
         variant="outline"
         size="icon"
+        id="logout-button"
         onClick={handleLogout}
       >
         <LogOut />
