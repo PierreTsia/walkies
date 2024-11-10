@@ -28,6 +28,12 @@ jobs:
       - name: Install dependencies
         run: npm install -g pnpm && pnpm install
 
+      - name: Verify environment variables
+        run: |
+          echo "Admin Email: ${{ secrets.TEST_ADMIN_USER_EMAIL }}"
+          echo "User Email: ${{ secrets.TEST_USER_EMAIL }}"
+        shell: bash
+
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 
