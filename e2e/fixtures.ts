@@ -10,8 +10,8 @@ export const authenticatedTest = base.extend<{
     await authenticateUser(
       context,
       context.request,
-      process.env.TEST_ADMIN_USER_EMAIL as string,
-      process.env.TEST_ADMIN_USER_PASSWORD as string,
+      'pierre.tsiakkaros@gmail.com',
+      'V3nd3tt475013!',
     )
     await use(context)
     await context.close()
