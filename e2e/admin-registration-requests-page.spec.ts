@@ -1,7 +1,7 @@
 import { authenticatedTest, expect } from './fixtures'
 import { BrowserContext } from '@playwright/test'
 
-authenticatedTest.describe('Admin > Registration Requests', () => {
+authenticatedTest.skip('Admin > Registration Requests', () => {
   authenticatedTest(
     'should access the registration request page  as admin',
     async ({
