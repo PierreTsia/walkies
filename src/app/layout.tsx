@@ -10,7 +10,6 @@ import { getLocale, getMessages } from 'next-intl/server'
 import { LocaleProvider } from '@/providers/LocaleProvider'
 import { Toaster } from '@/components/ui/toaster'
 import Footer from '@/components/Footer'
-import { logout } from '@/app/actions/logout'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import UserProviderWrapper from '@/providers/UserProviderWrapper'
@@ -53,7 +52,7 @@ export default async function RootLayout({
                     <Toaster />
                     <Analytics />
                   </main>
-                  <Footer logout={logout} />
+                  <Footer />
                   <ReactQueryDevtools initialIsOpen={false} />
                 </ReactQueryProvider>
               </ThemeProvider>
