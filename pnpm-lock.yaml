@@ -80,6 +80,9 @@ dependencies:
   date-fns:
     specifier: ^4.1.0
     version: 4.1.0
+  dotenv:
+    specifier: ^16.4.5
+    version: 16.4.5
   geist:
     specifier: ^1.0.0
     version: 1.2.0(next@14.1.0)
@@ -3784,6 +3787,11 @@ packages:
     dependencies:
       webidl-conversions: 7.0.0
     dev: true
+
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==, tarball: https://registry.npmjs.org/dotenv/-/dotenv-16.4.5.tgz}
+    engines: {node: '>=12'}
+    dev: false
 
   /duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
