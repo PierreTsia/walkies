@@ -14,15 +14,14 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 import UserProviderWrapper from '@/providers/UserProviderWrapper'
 
-import ReactQueryExample from '@/components/RegistrationRequestsDatatable'
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase',
+  title: 'Walkies Peupliers App',
+  description: 'A private network for dogs and humans',
 }
 
 export default async function RootLayout({
