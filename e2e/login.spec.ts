@@ -1,7 +1,7 @@
 import { authenticatedTest, expect } from './fixtures'
 import { BrowserContext } from '@playwright/test'
 
-authenticatedTest.describe('Authenticated Tests', () => {
+authenticatedTest.describe('Authenticated Tests Admin', () => {
   authenticatedTest(
     'should access protected content as admin',
     async ({
@@ -17,8 +17,10 @@ authenticatedTest.describe('Authenticated Tests', () => {
       ).toBeVisible()
     },
   )
+})
 
-  authenticatedTest.skip(
+authenticatedTest.describe('Authenticated Tests User', () => {
+  authenticatedTest(
     'should access protected content as regular user',
     async ({
       authenticatedUserContext,
