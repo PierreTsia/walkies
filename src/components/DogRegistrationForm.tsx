@@ -36,9 +36,9 @@ import { CalendarIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utils/tailwind'
 import useDateFormats from '@/hooks/useDateFormats'
-import { toast } from '@/hooks/use-toast'
 import { DateTime } from 'luxon'
 import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
+import useSaveUserDog from '@/hooks/useSaveUserDog'
 
 const isPossibleDogDoB = (dob: Date) =>
   dob < new Date() && isLessThanTwentyYearsOld(dob)
@@ -84,19 +84,13 @@ const DogRegistrationForm = () => {
 
   const { datePickerDateFormat } = useDateFormats()
 
+  const { mutateAsync: registerDog, isPending, isSuccess } = useSaveUserDog()
   const { setHasAlreadySavedDog, setDogName } = useOnboardingContext()
 
   const onSubmit = async (data: DogRegistrationFormData) => {
-    setIsLoading(true)
-    const isSuccess = await registerDog(data)
-    setHasAlreadySavedDog(isSuccess)
+    await registerDog(data)
+    setHasAlreadySavedDog(true)
     setDogName(data.name)
-    setIsLoading(false)
-
-    toast({
-      title: isSuccess ? t('success_toast') : t('error_toast'),
-      variant: isSuccess ? 'success' : 'destructive',
-    })
   }
 
   const togglePureBreed = () => {
