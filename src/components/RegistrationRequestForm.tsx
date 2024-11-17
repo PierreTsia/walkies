@@ -33,13 +33,14 @@ export default function RegistrationRequestForm() {
     reset,
     formState: { errors },
   } = useForm<FormValues>()
-  const [status, setStatus] = useState<null | 'success' | 'error'>(null)
-  const [isPending, startTransition] = useTransition()
+
   const [submitErrorMessage, setSubmitErrorMessage] = useState<string | null>(
     null,
   )
 
-  const { mutateAsync } = useSubmitRegistrationRequest()
+  const { mutateAsync, isPending, isError, isSuccess } =
+    useSubmitRegistrationRequest()
+
   const t = useTranslations('Registration')
 
   const onSubmit: SubmitHandler<FormValues> = (formData) => {
@@ -106,12 +107,12 @@ export default function RegistrationRequestForm() {
           <Button type="submit" disabled={isPending} variant="default">
             {isPending ? t('submitting') : t('submit')}
           </Button>
-          {status === 'success' && (
+          {isSuccess && (
             <p className="text-center text-sm text-green-600">
               {t('submit_success')}
             </p>
           )}
-          {status === 'error' && (
+          {isError && (
             <p className="text-center text-sm text-destructive">
               {submitErrorMessage}
             </p>
