@@ -1,21 +1,18 @@
 'use client'
 
+import useGetAnonymousRegistrationRequest from '@/hooks/useGetAnonymousRegistrationRequest'
+import { useUser } from '@/providers/UserProvider'
 import RegistrationRequestForm from '@/components/RegistrationRequestForm'
-
-import OnboardingStepper from '@/components/OnboardingStepper'
 import OnboardingContextProvider from '@/providers/OnboardingContextProvider'
-import { DogWithOwner, RegistrationRequest, UserType } from '@/types'
+import OnboardingStepper from '@/components/OnboardingStepper'
+import useGetUserDogs from '@/hooks/useGetUserDogs'
 import { useState } from 'react'
 
-const OnboardingContent = ({
-  request,
-  user,
-  dogs,
-}: {
-  request: RegistrationRequest | null
-  user: UserType | null
-  dogs: DogWithOwner[] | null
-}) => {
+const OnboardingContent = () => {
+  const { data: request } = useGetAnonymousRegistrationRequest()
+  const { data: dogs } = useGetUserDogs()
+  const user = useUser()
+
   const [hasAlreadySavedDog, setHasAlreadySavedDog] = useState(!!dogs?.length)
   const [dogName, setDogName] = useState(dogs?.[0]?.dog_name ?? '')
 
