@@ -14,11 +14,11 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import { submitRegistrationRequest } from '@/app/actions/submitRegistrationRequest'
 import { useTranslations } from 'next-intl'
 import { Separator } from '@/components/ui/separator'
 import { PawPrint } from 'lucide-react'
 import Link from 'next/link'
+import useSubmitRegistrationRequest from '@/hooks/useSubmitRegistrationRequest'
 
 type FormValues = {
   name: string
@@ -38,21 +38,12 @@ export default function RegistrationRequestForm() {
   const [submitErrorMessage, setSubmitErrorMessage] = useState<string | null>(
     null,
   )
+
+  const { mutateAsync } = useSubmitRegistrationRequest()
   const t = useTranslations('Registration')
 
   const onSubmit: SubmitHandler<FormValues> = (formData) => {
-    startTransition(async () => {
-      try {
-        const result = await submitRegistrationRequest(formData)
-        if (result.success) {
-          setStatus('success')
-          reset() // Clear form fields
-        }
-      } catch (error: any) {
-        setStatus('error')
-        setSubmitErrorMessage(error.message)
-      }
-    })
+    void mutateAsync(formData)
   }
 
   return (
