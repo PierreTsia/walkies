@@ -4,6 +4,7 @@ import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
 import { useRouter } from 'next/navigation'
 import { completeUserOnboarding } from '@/app/actions/completeOnboarding'
 import { Button } from '@/components/ui/button'
+import useCompleteOnboarding from '@/hooks/mutations/useCompleteOnboarding'
 
 const UploadDogImage = () => {
   const router = useRouter()
@@ -11,11 +12,10 @@ const UploadDogImage = () => {
   const { dogs } = useOnboardingContext()
   const dogName = dogs?.[0]?.dog_name ?? 'your dog'
 
+  const { mutateAsync } = useCompleteOnboarding()
+
   const handleCompleteOnboarding = async () => {
-    const isSuccess = await completeUserOnboarding()
-    if (isSuccess) {
-      router.push('/')
-    }
+    void mutateAsync()
   }
 
   return (

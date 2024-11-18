@@ -1,20 +1,21 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from '@/hooks/use-toast'
 
-import signIn from '@/app/actions/signIn'
+import { completeUserOnboarding } from '@/app/actions/completeOnboarding'
 import { useRouter } from 'next/navigation'
 
-const useSIgnInUser = () => {
+const useCompleteOnboarding = () => {
   const router = useRouter()
 
   return useMutation({
-    mutationFn: signIn,
+    mutationFn: completeUserOnboarding,
     onSuccess: () => {
       toast({
         title: 'Success',
-        description: 'Login successful',
+        description: 'Onboarding successfully completed',
         variant: 'success',
       })
+
       router.push('/')
     },
     onError: (error: Error) => {
@@ -23,10 +24,9 @@ const useSIgnInUser = () => {
         description: error.message,
         variant: 'destructive',
       })
-      console.error('Failed login user', error.message)
-      router.push('/login?message=Could not authenticate user')
+      console.error('Failed complete onboarding', error.message)
     },
   })
 }
 
-export default useSIgnInUser
+export default useCompleteOnboarding

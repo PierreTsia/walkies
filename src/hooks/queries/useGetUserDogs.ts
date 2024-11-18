@@ -9,9 +9,6 @@ const getMe = async () => {
     error: authError,
   } = await supabase.auth.getUser()
 
-  console.log('authUser', authUser)
-  console.log('authError', authError)
-
   if (!authUser) return null
 
   const { data: user, error } = await supabase

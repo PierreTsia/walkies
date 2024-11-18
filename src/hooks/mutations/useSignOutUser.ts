@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { toast } from '@/hooks/use-toast'
 
 import logout from '@/app/actions/logout'
