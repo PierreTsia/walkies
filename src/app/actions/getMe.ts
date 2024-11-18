@@ -10,10 +10,14 @@ const getMe = async () => {
     data: { user: authUser },
   } = await supabase.auth.getUser()
 
+  if (!authUser) {
+    return null
+  }
+
   const { data: user, error } = await supabase
     .from('users')
     .select('*')
-    .eq('auth_id', authUser?.id ?? '')
+    .eq('auth_id', authUser.id)
     .single()
 
   if (error) {

@@ -6,12 +6,13 @@ import { completeUserOnboarding } from '@/app/actions/completeOnboarding'
 import { Button } from '@/components/ui/button'
 
 const UploadDogImage = () => {
-  const { dogName, setHasAlreadySavedDog } = useOnboardingContext()
   const router = useRouter()
+
+  const { dogs } = useOnboardingContext()
+  const dogName = dogs?.[0]?.dog_name ?? 'your dog'
 
   const handleCompleteOnboarding = async () => {
     const isSuccess = await completeUserOnboarding()
-    setHasAlreadySavedDog(isSuccess)
     if (isSuccess) {
       router.push('/')
     }

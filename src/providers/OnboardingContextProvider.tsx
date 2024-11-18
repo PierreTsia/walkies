@@ -7,10 +7,6 @@ interface OnboardingContextType {
   request: RegistrationRequest | null
   user: UserType | null
   dogs: DogWithOwner[] | null
-  hasAlreadySavedDog: boolean
-  setHasAlreadySavedDog: (value: boolean) => void
-  dogName: string
-  setDogName: (value: string) => void
 }
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(

@@ -14,7 +14,9 @@ import UploadDogImage from '@/components/UploadDogImage'
 
 const DogRegistrationStep = () => {
   const t = useTranslations('DogRegistrationStep')
-  const { hasAlreadySavedDog, dogName } = useOnboardingContext()
+
+  const { dogs } = useOnboardingContext()
+  const hasAlreadySavedDog = !!dogs?.length
 
   return (
     <Card>

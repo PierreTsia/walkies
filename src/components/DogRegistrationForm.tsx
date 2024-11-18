@@ -85,12 +85,9 @@ const DogRegistrationForm = () => {
   const { datePickerDateFormat } = useDateFormats()
 
   const { mutateAsync: registerDog, isPending, isSuccess } = useSaveUserDog()
-  const { setHasAlreadySavedDog, setDogName } = useOnboardingContext()
 
   const onSubmit = async (data: DogRegistrationFormData) => {
     await registerDog(data)
-    setHasAlreadySavedDog(true)
-    setDogName(data.name)
   }
 
   const togglePureBreed = () => {
