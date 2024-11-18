@@ -1,11 +1,11 @@
 'use client'
 
-import useGetAnonymousRegistrationRequest from '@/hooks/useGetAnonymousRegistrationRequest'
+import useGetAnonymousRegistrationRequest from '@/hooks/queries/useGetAnonymousRegistrationRequest'
 import { useUser } from '@/providers/UserProvider'
 import RegistrationRequestForm from '@/components/RegistrationRequestForm'
 import OnboardingContextProvider from '@/providers/OnboardingContextProvider'
 import OnboardingStepper from '@/components/OnboardingStepper'
-import useGetUserDogs from '@/hooks/useGetUserDogs'
+import useGetUserDogs from '@/hooks/queries/useGetUserDogs'
 
 const OnboardingContent = () => {
   const { data: request } = useGetAnonymousRegistrationRequest()

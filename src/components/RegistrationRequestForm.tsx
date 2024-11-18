@@ -18,7 +18,7 @@ import { useTranslations } from 'next-intl'
 import { Separator } from '@/components/ui/separator'
 import { PawPrint } from 'lucide-react'
 import Link from 'next/link'
-import useSubmitRegistrationRequest from '@/hooks/useSubmitRegistrationRequest'
+import useSubmitRegistrationRequest from '@/hooks/mutations/useSubmitRegistrationRequest'
 
 type FormValues = {
   name: string

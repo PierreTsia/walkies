@@ -38,7 +38,7 @@ import { cn } from '@/utils/tailwind'
 import useDateFormats from '@/hooks/useDateFormats'
 import { DateTime } from 'luxon'
 import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
-import useSaveUserDog from '@/hooks/useSaveUserDog'
+import useSaveUserDog from '@/hooks/mutations/useSaveUserDog'
 
 const isPossibleDogDoB = (dob: Date) =>
   dob < new Date() && isLessThanTwentyYearsOld(dob)

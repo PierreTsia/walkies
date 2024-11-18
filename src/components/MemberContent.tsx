@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
-import useGetUserDogs from '@/hooks/useGetUserDogs'
+import useGetUserDogs from '@/hooks/queries/useGetUserDogs'
 
 const MemberContent = () => {
   const { data } = useGetUserDogs()

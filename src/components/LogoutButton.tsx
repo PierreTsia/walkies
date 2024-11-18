@@ -3,7 +3,7 @@
 import { LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import useSIgnOutUser from '@/hooks/useSignOutUser'
+import useSIgnOutUser from '@/hooks/mutations/useSignOutUser'
 import { useUser } from '@/providers/UserProvider'
 
 const LogoutButton = () => {

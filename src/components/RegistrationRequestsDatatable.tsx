@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import useQueryRegistrationRequests from '@/hooks/useQueryRegistrationRequests'
+import useQueryRegistrationRequests from '@/hooks/queries/useQueryRegistrationRequests'
 import {
   ColumnDef,
   flexRender,
@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import useMutateRegistrationRequestStatus from '@/hooks/useMutateRegistrationRequestStatus'
+import useMutateRegistrationRequestStatus from '@/hooks/mutations/useMutateRegistrationRequestStatus'
 
 const RegistrationRequestsDatatable = () => {
   const { data } = useQueryRegistrationRequests()
