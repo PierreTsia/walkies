@@ -10,7 +10,7 @@ import {
 import DogRegistrationForm from '@/components/DogRegistrationForm'
 import { useTranslations } from 'next-intl'
 import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
-import UploadDogImage from '@/components/UploadDogImage'
+import DogAvatarPicker from '@/components/DogAvatarPicker'
 
 const DogRegistrationStep = () => {
   const t = useTranslations('DogRegistrationStep')
@@ -25,7 +25,7 @@ const DogRegistrationStep = () => {
         <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
-        {hasAlreadySavedDog ? <UploadDogImage /> : <DogRegistrationForm />}
+        {hasAlreadySavedDog ? <DogAvatarPicker /> : <DogRegistrationForm />}
       </CardContent>
     </Card>
   )
