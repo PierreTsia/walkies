@@ -1,37 +1,22 @@
 'use client'
 
+import useGetAnonymousRegistrationRequest from '@/hooks/queries/useGetAnonymousRegistrationRequest'
+import { useUser } from '@/providers/UserProvider'
 import RegistrationRequestForm from '@/components/RegistrationRequestForm'
-
-import OnboardingStepper from '@/components/OnboardingStepper'
 import OnboardingContextProvider from '@/providers/OnboardingContextProvider'
-import { DogWithOwner, RegistrationRequest, UserType } from '@/types'
-import { useState } from 'react'
+import OnboardingStepper from '@/components/OnboardingStepper'
+import useGetUserDogs from '@/hooks/queries/useGetUserDogs'
 
-const OnboardingContent = ({
-  request,
-  user,
-  dogs,
-}: {
-  request: RegistrationRequest | null
-  user: UserType | null
-  dogs: DogWithOwner[] | null
-}) => {
-  const [hasAlreadySavedDog, setHasAlreadySavedDog] = useState(!!dogs?.length)
-  const [dogName, setDogName] = useState(dogs?.[0]?.dog_name ?? '')
+const OnboardingContent = () => {
+  const { data: request } = useGetAnonymousRegistrationRequest()
+  const { data: dogs } = useGetUserDogs()
+  const user = useUser()
 
   if (!request && !user) {
     return <RegistrationRequestForm />
   }
   return (
-    <OnboardingContextProvider
-      request={request}
-      user={user}
-      dogs={dogs}
-      hasAlreadySavedDog={hasAlreadySavedDog}
-      dogName={dogName}
-      setDogName={setDogName}
-      setHasAlreadySavedDog={setHasAlreadySavedDog}
-    >
+    <OnboardingContextProvider request={request} user={user} dogs={dogs}>
       <OnboardingStepper />
     </OnboardingContextProvider>
   )

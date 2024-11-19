@@ -88,8 +88,21 @@
     }
   },
   "DogRegistrationStep": {
-    "title": "Enregistrement du chien",
-    "description": "Parlez-nous de votre ami à quatre pattes !",
+    "DogAvatarPicker": {
+      "save-button": "Enregistrer",
+      "skip-button": "Passer et terminer l'inscription"
+    },
+    "dialog": {
+      "title": "Télécharger une image",
+      "description": "Sélectionnez un fichier .jpg ou .png de moins de 3 Mo",
+      "uploading": "En cours de transfert...",
+      "cancel": "Annuler",
+      "confirm": "Confirmer"
+    },
+    "save-dog-title": "Enregistrement du chien",
+    "upload-dog-avatar-title": "On y est presque !",
+    "save-dog-description": "Parlez-nous de votre ami à quatre pattes !",
+    "upload-dog-avatar-description": "Choisissez un avatar prédéfini ou téléchargez une photo de {dogName}",
     "male": "Mâle",
     "female": "Femelle",
     "breed_label": "Connaissez-vous la race de votre chien ?",

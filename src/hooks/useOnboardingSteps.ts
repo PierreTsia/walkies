@@ -2,15 +2,9 @@ import { StepItem } from '@/components/ui/stepper'
 import { useTranslations } from 'next-intl'
 
 const STEPS_ID = [
-  {
-    id: 'waiting_for_approval',
-  },
-  {
-    id: 'user_registration',
-  },
-  {
-    id: 'dog_registration',
-  },
+  { id: 'waiting_for_approval' },
+  { id: 'user_registration' },
+  { id: 'dog_registration' },
 ] satisfies Pick<StepItem, 'id'>[]
 
 const useOnboardingSteps = () => {

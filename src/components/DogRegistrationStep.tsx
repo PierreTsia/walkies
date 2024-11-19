@@ -10,20 +10,33 @@ import {
 import DogRegistrationForm from '@/components/DogRegistrationForm'
 import { useTranslations } from 'next-intl'
 import { useOnboardingContext } from '@/providers/OnboardingContextProvider'
-import UploadDogImage from '@/components/UploadDogImage'
+import DogAvatarPicker from '@/components/DogAvatarPicker'
 
 const DogRegistrationStep = () => {
   const t = useTranslations('DogRegistrationStep')
-  const { hasAlreadySavedDog, dogName } = useOnboardingContext()
+
+  const { dogs } = useOnboardingContext()
+  const dogName = dogs?.[0]?.dog_name ?? 'your dog'
+  const hasAlreadySavedDog = !!dogs?.length
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('title')}</CardTitle>
-        <CardDescription>{t('description')}</CardDescription>
+        <CardTitle>
+          {hasAlreadySavedDog
+            ? t('upload-dog-avatar-title')
+            : t('save-dog-title')}
+        </CardTitle>
+        <CardDescription>
+          {hasAlreadySavedDog
+            ? t('upload-dog-avatar-description', {
+                dogName,
+              }) /*`Choose a default avtar or upload an image for ${dogName}`*/
+            : t('save-dog-description')}
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        {hasAlreadySavedDog ? <UploadDogImage /> : <DogRegistrationForm />}
+        {hasAlreadySavedDog ? <DogAvatarPicker /> : <DogRegistrationForm />}
       </CardContent>
     </Card>
   )

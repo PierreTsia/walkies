@@ -11,6 +11,11 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '5mb',
+    },
+  },
 }
 
 module.exports = withBundleAnalyzer(withNextIntl(nextConfig))

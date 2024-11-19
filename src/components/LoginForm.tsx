@@ -15,7 +15,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useTranslations } from 'next-intl'
 import FormButtons from '@/components/FormButtons'
-import useSignInUser from '@/hooks/useSignInUser'
+import useSignInUser from '@/hooks/mutations/useSignInUser'
 
 const FormSchema = z.object({
   email: z.string().email('Please enter a valid email address '),
