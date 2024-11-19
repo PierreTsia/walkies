@@ -1,6 +1,5 @@
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -13,6 +12,7 @@ import { Upload } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type UploadDogAvatarDialogProps = {
   handleImageUpload: (f: File) => void
@@ -27,6 +27,7 @@ const UploadDogAvatarDialog = ({
   isUploading,
   previewUrl,
 }: UploadDogAvatarDialogProps) => {
+  const t = useTranslations('DogRegistrationStep.dialog')
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -41,10 +42,8 @@ const UploadDogAvatarDialog = ({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Upload an Image</DialogTitle>
-          <DialogDescription>
-            Select a .jpeg, .png file with a maximum size of 3MB.
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
         <Input
           type="file"
@@ -62,21 +61,19 @@ const UploadDogAvatarDialog = ({
             </Avatar>
           </div>
         )}
-        {isUploading && <p>Uploading...</p>}
+        {isUploading && <p>{t('uploading')}</p>}
         <DialogFooter className="gap-2">
-          <DialogClose asChild>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                onCancelClick()
-                setIsOpen(false) // Close dialog on cancel
-              }}
-            >
-              Cancel
-            </Button>
-          </DialogClose>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              onCancelClick()
+              setIsOpen(false) // Close dialog on cancel
+            }}
+          >
+            {t('cancel')}
+          </Button>
           <Button variant="default" onClick={() => setIsOpen(false)}>
-            Confirm
+            {t('confirm')}
           </Button>
         </DialogFooter>
       </DialogContent>

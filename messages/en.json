@@ -88,8 +88,21 @@
     }
   },
   "DogRegistrationStep": {
-    "title": "Dog registration",
-    "description": "Tell us everything about your furry friend !",
+    "DogAvatarPicker": {
+      "save-button": "Upload and Save",
+      "skip-button": "Skip and finish onboarding"
+    },
+    "dialog": {
+      "title": "Upload an avatar",
+      "description": " Select a .jpeg, .png file with a maximum size of 3MB.",
+      "uploading": "Uploading...",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "save-dog-title": "Dog registration",
+    "upload-dog-avatar-title": "On y est presque !",
+    "save-dog-description": "Tell us everything about your furry friend !",
+    "upload-dog-avatar-description": "Choose a default avtar or upload an image for ${dogName}",
     "male": "Male",
     "female": "Female",
     "breed_label": "Do you know the breed of your dog?",
